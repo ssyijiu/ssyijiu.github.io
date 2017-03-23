@@ -87,7 +87,9 @@
 
 
 
-<meta name="description" content="一. 运行时权限适配前
+<meta name="description" content="版权声明：本文来自书生依旧的简书，转载请注明出处 。  
+
+一. 运行时权限适配前
 什么时候会触发运行时权限机制？
 targetSdkVersion &amp;gt;= 23 ，运行在 Android 6.0 及以上设备上，使用 危险权限 的时候。
 
@@ -95,12 +97,14 @@ targetSdkVersion &amp;gt;= 23 ，运行在 Android 6.0 及以上设备上，使�
 应用崩溃。
 
 来不及适配怎么办？
-设置 targetSdkVersion &amp;lt; 23，会和以前一样，在应用安装申请所有的权限。值得注意的是用户依然可以在设置里取消已授权的">
+设置 targetSdkVersion &amp;lt; 23，会和以前一样，在应用安">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android 6.0 运行时权限 总结 & 实践">
 <meta property="og:url" content="http://ssyijiu.com/2017/03/23/Android_Runtime_Permissions/index.html">
 <meta property="og:site_name" content="ssyijiu'home">
-<meta property="og:description" content="一. 运行时权限适配前
+<meta property="og:description" content="版权声明：本文来自书生依旧的简书，转载请注明出处 。  
+
+一. 运行时权限适配前
 什么时候会触发运行时权限机制？
 targetSdkVersion &amp;gt;= 23 ，运行在 Android 6.0 及以上设备上，使用 危险权限 的时候。
 
@@ -108,11 +112,13 @@ targetSdkVersion &amp;gt;= 23 ，运行在 Android 6.0 及以上设备上，使�
 应用崩溃。
 
 来不及适配怎么办？
-设置 targetSdkVersion &amp;lt; 23，会和以前一样，在应用安装申请所有的权限。值得注意的是用户依然可以在设置里取消已授权的">
-<meta property="og:updated_time" content="2017-03-23T14:44:08.000Z">
+设置 targetSdkVersion &amp;lt; 23，会和以前一样，在应用安">
+<meta property="og:updated_time" content="2017-03-23T14:53:05.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android 6.0 运行时权限 总结 & 实践">
-<meta name="twitter:description" content="一. 运行时权限适配前
+<meta name="twitter:description" content="版权声明：本文来自书生依旧的简书，转载请注明出处 。  
+
+一. 运行时权限适配前
 什么时候会触发运行时权限机制？
 targetSdkVersion &amp;gt;= 23 ，运行在 Android 6.0 及以上设备上，使用 危险权限 的时候。
 
@@ -120,7 +126,7 @@ targetSdkVersion &amp;gt;= 23 ，运行在 Android 6.0 及以上设备上，使�
 应用崩溃。
 
 来不及适配怎么办？
-设置 targetSdkVersion &amp;lt; 23，会和以前一样，在应用安装申请所有的权限。值得注意的是用户依然可以在设置里取消已授权的">
+设置 targetSdkVersion &amp;lt; 23，会和以前一样，在应用安">
 
 
 
@@ -377,7 +383,10 @@ targetSdkVersion &amp;gt;= 23 ，运行在 Android 6.0 及以上设备上，使�
       
 
       
-        <h3 id="一-运行时权限适配前"><a href="#一-运行时权限适配前" class="headerlink" title="一. 运行时权限适配前"></a>一. 运行时权限适配前</h3><ol>
+        <blockquote>
+<p>版权声明：本文来自<a href="http://www.jianshu.com/u/0dfb41dd9210" target="_blank" rel="external">书生依旧</a>的简书，转载请注明出处 。  </p>
+</blockquote>
+<h3 id="一-运行时权限适配前"><a href="#一-运行时权限适配前" class="headerlink" title="一. 运行时权限适配前"></a>一. 运行时权限适配前</h3><ol>
 <li><p>什么时候会触发运行时权限机制？</p>
 <p>targetSdkVersion &gt;= 23 ，运行在 Android 6.0 及以上设备上，使用 <a href="https://developer.android.com/guide/topics/security/permissions.html#perm-groups" target="_blank" rel="external">危险权限</a> 的时候。</p>
 </li>
@@ -448,30 +457,30 @@ targetSdkVersion &amp;gt;= 23 ，运行在 Android 6.0 及以上设备上，使�
 <li>调用这个方法必然会走 onRequestPermissionsResult 的回调。</li>
 </ul>
 </li>
-<li><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 申请权限的回调，在 Activity 和 Fragment 中都有</span></div><div class="line">onRequestPermissionsResult(<span class="keyword">int</span> requestCode,</div><div class="line">                                           <span class="meta">@NonNull</span> String[] permissions,</div><div class="line">                                           <span class="meta">@NonNull</span> <span class="keyword">int</span>[] grantResults)</div><div class="line"><span class="comment">// requestCode：requestPermissions 的参数，请求码</span></div><div class="line"><span class="comment">// permissions：请求授权的权限，是一个数组，对应我们前面申请的多个权限</span></div><div class="line"><span class="comment">// grantResults：授权结果，也是一个数组，对应上面每个权限的申请结果，PERMISSION_GRANTED 同意，PERMISSION_DENIED 拒绝</span></div></pre></td></tr></table></figure>
+<li><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 申请权限的回调，在 Activity 和 Fragment 中都有</span></div><div class="line">onRequestPermissionsResult(<span class="keyword">int</span> requestCode, <span class="meta">@NonNull</span> String[] permissions, <span class="meta">@NonNull</span> <span class="keyword">int</span>[] grantResults)</div><div class="line"><span class="comment">// requestCode：requestPermissions 的参数，请求码</span></div><div class="line"><span class="comment">// permissions：请求授权的权限，是一个数组，对应我们前面申请的多个权限</span></div><div class="line"><span class="comment">// grantResults：授权结果，也是一个数组，对应上面每个权限的申请结果，PERMISSION_GRANTED 同意，PERMISSION_DENIED 拒绝</span></div></pre></td></tr></table></figure>
 </li>
-<li><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 申请某个权限时我们是否要给用户解释一下</span></div><div class="line">ActivityCompat.shouldShowRequestPermissionRationale(<span class="meta">@NonNull</span> Activity activity,</div><div class="line">            <span class="meta">@NonNull</span> String permission)</div><div class="line"><span class="comment">// permission：要解释的权限</span></div></pre></td></tr></table></figure>
+<li><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 申请某个权限时我们是否要给用户解释一下</span></div><div class="line">ActivityCompat.shouldShowRequestPermissionRationale(<span class="meta">@NonNull</span> Activity activity, <span class="meta">@NonNull</span> String permission)</div><div class="line"><span class="comment">// permission：要解释的权限</span></div></pre></td></tr></table></figure>
 <ul>
 <li>如果用户拒绝过我们的权限申请，shouldShowRequestPermissionRationale 会返回 true。此时我们最好弹出一个对话框告诉用户，你拒绝过我的权限申请，我申请这个权限是做什么用的，希望你能同意等等。</li>
 <li>shouldShowRequestPermissionRationale 会返回 true 的时候，我们再次申请权限，会有一个 “不再提醒” 的 checkBox ，当用户勾选上时，我们再次调用 shouldShowRequestPermissionRationale 会返回 false，意思说用户都不想看到了，就没有必要再解释了。</li>
 <li>注意：用户选择 “不再提醒” 后，再次 requestPermissions 总是会失败，但是会走 onRequestPermissionsResult 的回调。</li>
-<li>总结：shouldShowRequestPermissionRationale 返回 false，有两种可能，一是我们第一次申请权限的时候，二是用户选择了 “不再提醒”；shouldShowRequestPermissionRationale 返回 true 是用户拒绝过我们的权限申请但是没有勾选 “不再提醒”</li>
+<li>总结：shouldShowRequestPermissionRationale 返回 false，有两种可能，一是我们第一次申请权限的时候，二是用户选择了 “不再提醒”。shouldShowRequestPermissionRationale 返回 true 是用户拒绝过我们的权限申请但是没有勾选 “不再提醒”。</li>
 </ul>
 </li>
 </ol>
 <h3 id="四-权限适配最佳套路"><a href="#四-权限适配最佳套路" class="headerlink" title="四. 权限适配最佳套路"></a>四. 权限适配最佳套路</h3><ol>
-<li><p>在 <code>AndroidManifest.xml</code> 添加权限声明。</p>
+<li><p>在 AndroidManifest.xml 添加权限声明。</p>
 </li>
-<li><p>使用 <code>checkSelfPermission</code> 检查某个权限是否已经申请。</p>
+<li><p>使用 checkSelfPermission 检查某个权限是否已经申请。</p>
 </li>
-<li><p>权限未申请，使用 <code>requestPermissions</code> 申请权限。</p>
+<li><p>权限未申请，使用 requestPermissions 申请权限。</p>
 </li>
-<li><p>在 <code>onRequestPermissionsResult</code> 回调中判断权限是否申请成功。</p>
+<li><p>在 onRequestPermissionsResult 回调中判断权限是否申请成功。</p>
 </li>
-<li><p>申请失败使用 <code>shouldShowRequestPermissionRationale</code> 判断用户是否勾选了 “不再提醒”。</p>
+<li><p>申请失败使用 shouldShowRequestPermissionRationale 判断用户是否勾选了 “不再提醒”。</p>
 <ul>
 <li><p>勾选了的话，弹出一个 Dialog 引导用户到设置界面授予权限。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 到设置界面授予权限</span></div><div class="line">Intent intent = <span class="keyword">new</span> Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);</div><div class="line">Uri uri = Uri.fromParts(<span class="string">"package"</span>,getPackageName(), <span class="keyword">null</span>);</div><div class="line">intent.setData(uri);</div><div class="line"></div><div class="line"><span class="comment">// startActivityForResult(intent);</span></div><div class="line"><span class="comment">// 我这里使用的是 RxActivityResult 这个库</span></div><div class="line">RxActivityResult.on(context)</div><div class="line">                .startIntent(intent)</div><div class="line">                .subscribe(activityResult -&gt; &#123;</div><div class="line">                    <span class="comment">// 再次判断用户是否同意的权限，同意执行后面的操作，不同给出提示</span></div><div class="line">                  	checkPermission();</div><div class="line">                &#125;);</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 到设置界面授予权限</span></div><div class="line">Intent intent = <span class="keyword">new</span> Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);</div><div class="line">Uri uri = Uri.fromParts(<span class="string">"package"</span>,getPackageName(), <span class="keyword">null</span>);</div><div class="line">intent.setData(uri);</div><div class="line"></div><div class="line"><span class="comment">// startActivityForResult(intent);</span></div><div class="line"><span class="comment">// 我这里使用的是 RxActivityResult 这个库</span></div><div class="line">RxActivityResult.on(context)</div><div class="line">                .startIntent(intent)</div><div class="line">                .subscribe(activityResult -&gt; &#123;</div><div class="line">                    <span class="comment">// 再次判断用户是否同意的权限，同意执行后面的操作，不同给出提示</span></div><div class="line">                   checkPermission();</div><div class="line">                &#125;);</div></pre></td></tr></table></figure>
 <p>​</p>
 </li>
 <li><p>没有勾选，可以什么都不做，也可以弹出弹出一个 Dialog 引导用户到设置界面授予权限。  </p>
@@ -480,8 +489,8 @@ targetSdkVersion &amp;gt;= 23 ，运行在 Android 6.0 及以上设备上，使�
 </li>
 </ol>
 <h3 id="五-需要注意的地方"><a href="#五-需要注意的地方" class="headerlink" title="五. 需要注意的地方"></a>五. 需要注意的地方</h3><ul>
-<li><code>READ_PHONE_STATE</code>、<code>READ_EXTERNAL_STORAGE</code>、<code>WRITE_EXTERNAL_STORAGE</code> 几乎是必须的，可以放在启动页申请，用户拒绝后引导至设置页面。</li>
-<li>同时申请多个权限时，用户可能仅仅同意某个权限，在 <code>onRequestPermissionsResult</code> 要循环判断每个是否申请成功，然后进行后续的操作。</li>
+<li>READ_PHONE_STATE、READ_EXTERNAL_STORAGE、WRITE_EXTERNAL_STORAGE 几乎是必须的，可以放在启动页申请，用户拒绝后引导至设置页面。</li>
+<li>同时申请多个权限时，用户可能仅仅同意某个权限，在 onRequestPermissionsResult 要循环判断每个是否申请成功，然后进行后续的操作。</li>
 </ul>
 <h3 id="六-推荐几个类库"><a href="#六-推荐几个类库" class="headerlink" title="六. 推荐几个类库"></a>六. 推荐几个类库</h3><p>两个 star 比较多的运行时权限管理库</p>
 <ul>
