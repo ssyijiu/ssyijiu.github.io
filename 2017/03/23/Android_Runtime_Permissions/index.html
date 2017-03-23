@@ -1,0 +1,869 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="summary,practice," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="一. 运行时权限适配前
+什么时候会触发运行时权限机制？
+targetSdkVersion &amp;gt;= 23 ，运行在 Android 6.0 及以上设备上，使用 危险权限 的时候。
+
+触发了运行时权限，没有进行适配会怎么样？
+应用崩溃。
+
+来不及适配怎么办？
+设置 targetSdkVersion &amp;lt; 23，会和以前一样，在应用安装申请所有的权限。值得注意的是用户依然可以在设置里取消已授权的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 6.0 运行时权限 总结 & 实践">
+<meta property="og:url" content="http://ssyijiu.com/2017/03/23/Android_Runtime_Permissions/index.html">
+<meta property="og:site_name" content="ssyijiu'home">
+<meta property="og:description" content="一. 运行时权限适配前
+什么时候会触发运行时权限机制？
+targetSdkVersion &amp;gt;= 23 ，运行在 Android 6.0 及以上设备上，使用 危险权限 的时候。
+
+触发了运行时权限，没有进行适配会怎么样？
+应用崩溃。
+
+来不及适配怎么办？
+设置 targetSdkVersion &amp;lt; 23，会和以前一样，在应用安装申请所有的权限。值得注意的是用户依然可以在设置里取消已授权的">
+<meta property="og:updated_time" content="2017-03-23T14:44:08.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android 6.0 运行时权限 总结 & 实践">
+<meta name="twitter:description" content="一. 运行时权限适配前
+什么时候会触发运行时权限机制？
+targetSdkVersion &amp;gt;= 23 ，运行在 Android 6.0 及以上设备上，使用 危险权限 的时候。
+
+触发了运行时权限，没有进行适配会怎么样？
+应用崩溃。
+
+来不及适配怎么办？
+设置 targetSdkVersion &amp;lt; 23，会和以前一样，在应用安装申请所有的权限。值得注意的是用户依然可以在设置里取消已授权的">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"hide","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://ssyijiu.com/2017/03/23/Android_Runtime_Permissions/"/>
+
+
+
+
+
+  <title> Android 6.0 运行时权限 总结 & 实践 | ssyijiu'home </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ssyijiu'home</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://ssyijiu.com/2017/03/23/Android_Runtime_Permissions/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ssyijiu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://obe5pxv6t.bkt.clouddn.com/ssyijiu.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ssyijiu'home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Android 6.0 运行时权限 总结 & 实践
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-23T00:00:00+08:00">
+                2017-03-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="一-运行时权限适配前"><a href="#一-运行时权限适配前" class="headerlink" title="一. 运行时权限适配前"></a>一. 运行时权限适配前</h3><ol>
+<li><p>什么时候会触发运行时权限机制？</p>
+<p>targetSdkVersion &gt;= 23 ，运行在 Android 6.0 及以上设备上，使用 <a href="https://developer.android.com/guide/topics/security/permissions.html#perm-groups" target="_blank" rel="external">危险权限</a> 的时候。</p>
+</li>
+<li><p>触发了运行时权限，没有进行适配会怎么样？</p>
+<p>应用崩溃。</p>
+</li>
+<li><p>来不及适配怎么办？</p>
+<p>设置 targetSdkVersion &lt; 23，会和以前一样，在应用安装申请所有的权限。值得注意的是用户依然可以在设置里取消已授权的权限，这时候应用虽然不会崩溃，但是肯定是无法使用这个权限的，而且不会给用户任何的提示。</p>
+</li>
+</ol>
+<p>###二. 权限组</p>
+<ul>
+<li>Android 将不同的权限分组管理，任何权限都会属于一个权限组，包括正常权限和危险权限。</li>
+<li>应用申请危险权限时，系统会向用户显示一个对话框，描述应用要访问的权限组，而不是不描述要申请的具体权限。一个权限组有一个权限申请成功，则默认该权限组所有权限申请成功，再次申请该组其他权限时，系统将立即授予该权限，不会再现实申请权限的对话框。</li>
+<li>危险权限共 9 组 24 个</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>权限组</th>
+<th>权限</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CALENDAR</td>
+<td><code>READ_CALENDAR</code> <code>WRITE_CALENDAR</code></td>
+</tr>
+<tr>
+<td>CAMERA</td>
+<td><code>CAMERA</code></td>
+</tr>
+<tr>
+<td>CONTACTS</td>
+<td><code>READ_CONTACTS</code>  <code>WRITE_CONTACTS</code>  <code>GET_ACCOUNTS</code></td>
+</tr>
+<tr>
+<td>LOCATION</td>
+<td><code>ACCESS_FINE_LOCATION</code>  <code>ACCESS_COARSE_LOCATION</code></td>
+</tr>
+<tr>
+<td>MICROPHONE</td>
+<td><code>RECORD_AUDIO</code></td>
+</tr>
+<tr>
+<td>PHONE</td>
+<td><code>READ_PHONE_STATE</code>  <code>CALL_PHONE</code>  <code>READ_CALL_LOG</code> <code>WRITE_CALL_LOG</code> <code>ADD_VOICEMAIL</code>  <code>USE_SIP</code>  <code>PROCESS_OUTGOING_CALLS</code></td>
+</tr>
+<tr>
+<td>SENSORS</td>
+<td><code>BODY_SENSORS</code></td>
+</tr>
+<tr>
+<td>SMS</td>
+<td><code>SEND_SMS</code>  <code>RECEIVE_SMS</code>  <code>READ_SMS</code>  <code>RECEIVE_WAP_PUSH</code> <code>RECEIVE_MMS</code></td>
+</tr>
+<tr>
+<td>STORAGE</td>
+<td><code>READ_EXTERNAL_STORAGE</code>  <code>WRITE_EXTERNAL_STORAGE</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="三-API-详解"><a href="#三-API-详解" class="headerlink" title="三. API 详解"></a>三. API 详解</h3><ol>
+<li><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 检查某个权限是否已授权</span></div><div class="line">ActivityCompat.checkSelfPermission(Context context, String permission)  </div><div class="line"><span class="comment">// permission：要检查的权限</span></div><div class="line"><span class="comment">// 返回值是 int 类型，PackageManager#PERMISSION_GRANTED 表示有权限，PackageManager#PERMISSION_DENIED 表示没有权限</span></div></pre></td></tr></table></figure>
+</li>
+<li><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">// 申请权限</div><div class="line">ActivityCompat.requestPermissions(final @NonNull Activity activity, final @NonNull String[] permissions, final @IntRange(from = 0) int requesPackageManager#PERMISSION_GRANTEDtCode)</div><div class="line">// permissions：要申请的权限，可以一次申请多个</div><div class="line">// requestCode：请求码，在申请权限的回调中用到</div></pre></td></tr></table></figure>
+<ul>
+<li>调用这个方法必然会走 onRequestPermissionsResult 的回调。</li>
+</ul>
+</li>
+<li><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 申请权限的回调，在 Activity 和 Fragment 中都有</span></div><div class="line">onRequestPermissionsResult(<span class="keyword">int</span> requestCode,</div><div class="line">                                           <span class="meta">@NonNull</span> String[] permissions,</div><div class="line">                                           <span class="meta">@NonNull</span> <span class="keyword">int</span>[] grantResults)</div><div class="line"><span class="comment">// requestCode：requestPermissions 的参数，请求码</span></div><div class="line"><span class="comment">// permissions：请求授权的权限，是一个数组，对应我们前面申请的多个权限</span></div><div class="line"><span class="comment">// grantResults：授权结果，也是一个数组，对应上面每个权限的申请结果，PERMISSION_GRANTED 同意，PERMISSION_DENIED 拒绝</span></div></pre></td></tr></table></figure>
+</li>
+<li><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 申请某个权限时我们是否要给用户解释一下</span></div><div class="line">ActivityCompat.shouldShowRequestPermissionRationale(<span class="meta">@NonNull</span> Activity activity,</div><div class="line">            <span class="meta">@NonNull</span> String permission)</div><div class="line"><span class="comment">// permission：要解释的权限</span></div></pre></td></tr></table></figure>
+<ul>
+<li>如果用户拒绝过我们的权限申请，shouldShowRequestPermissionRationale 会返回 true。此时我们最好弹出一个对话框告诉用户，你拒绝过我的权限申请，我申请这个权限是做什么用的，希望你能同意等等。</li>
+<li>shouldShowRequestPermissionRationale 会返回 true 的时候，我们再次申请权限，会有一个 “不再提醒” 的 checkBox ，当用户勾选上时，我们再次调用 shouldShowRequestPermissionRationale 会返回 false，意思说用户都不想看到了，就没有必要再解释了。</li>
+<li>注意：用户选择 “不再提醒” 后，再次 requestPermissions 总是会失败，但是会走 onRequestPermissionsResult 的回调。</li>
+<li>总结：shouldShowRequestPermissionRationale 返回 false，有两种可能，一是我们第一次申请权限的时候，二是用户选择了 “不再提醒”；shouldShowRequestPermissionRationale 返回 true 是用户拒绝过我们的权限申请但是没有勾选 “不再提醒”</li>
+</ul>
+</li>
+</ol>
+<h3 id="四-权限适配最佳套路"><a href="#四-权限适配最佳套路" class="headerlink" title="四. 权限适配最佳套路"></a>四. 权限适配最佳套路</h3><ol>
+<li><p>在 <code>AndroidManifest.xml</code> 添加权限声明。</p>
+</li>
+<li><p>使用 <code>checkSelfPermission</code> 检查某个权限是否已经申请。</p>
+</li>
+<li><p>权限未申请，使用 <code>requestPermissions</code> 申请权限。</p>
+</li>
+<li><p>在 <code>onRequestPermissionsResult</code> 回调中判断权限是否申请成功。</p>
+</li>
+<li><p>申请失败使用 <code>shouldShowRequestPermissionRationale</code> 判断用户是否勾选了 “不再提醒”。</p>
+<ul>
+<li><p>勾选了的话，弹出一个 Dialog 引导用户到设置界面授予权限。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 到设置界面授予权限</span></div><div class="line">Intent intent = <span class="keyword">new</span> Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);</div><div class="line">Uri uri = Uri.fromParts(<span class="string">"package"</span>,getPackageName(), <span class="keyword">null</span>);</div><div class="line">intent.setData(uri);</div><div class="line"></div><div class="line"><span class="comment">// startActivityForResult(intent);</span></div><div class="line"><span class="comment">// 我这里使用的是 RxActivityResult 这个库</span></div><div class="line">RxActivityResult.on(context)</div><div class="line">                .startIntent(intent)</div><div class="line">                .subscribe(activityResult -&gt; &#123;</div><div class="line">                    <span class="comment">// 再次判断用户是否同意的权限，同意执行后面的操作，不同给出提示</span></div><div class="line">                  	checkPermission();</div><div class="line">                &#125;);</div></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+<li><p>没有勾选，可以什么都不做，也可以弹出弹出一个 Dialog 引导用户到设置界面授予权限。  </p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="五-需要注意的地方"><a href="#五-需要注意的地方" class="headerlink" title="五. 需要注意的地方"></a>五. 需要注意的地方</h3><ul>
+<li><code>READ_PHONE_STATE</code>、<code>READ_EXTERNAL_STORAGE</code>、<code>WRITE_EXTERNAL_STORAGE</code> 几乎是必须的，可以放在启动页申请，用户拒绝后引导至设置页面。</li>
+<li>同时申请多个权限时，用户可能仅仅同意某个权限，在 <code>onRequestPermissionsResult</code> 要循环判断每个是否申请成功，然后进行后续的操作。</li>
+</ul>
+<h3 id="六-推荐几个类库"><a href="#六-推荐几个类库" class="headerlink" title="六. 推荐几个类库"></a>六. 推荐几个类库</h3><p>两个 star 比较多的运行时权限管理库</p>
+<ul>
+<li><p><a href="https://github.com/tbruyelle/RxPermissions" target="_blank" rel="external">RxPermissions</a></p>
+</li>
+<li><p><a href="https://github.com/hotchemi/PermissionsDispatcher" target="_blank" rel="external">PermissionsDispatcher</a></p>
+<p>值得一说的是，第二个库我在他的 issues  看到了解决了小米手机的相关问题（具体没有去探究），第一个嘛，看名字也知道支持 RxJava。</p>
+</li>
+</ul>
+<p>还有就是上文我使用的 <a href="https://github.com/VictorAlbertos/RxActivityResult" target="_blank" rel="external">RxActivityResult</a></p>
+<h3 id="Thanks"><a href="#Thanks" class="headerlink" title="Thanks"></a>Thanks</h3><p><a href="http://jijiaxin89.com/2015/08/30/Android-s-Runtime-Permission/" target="_blank" rel="external">Android M 新的运行时权限开发者需要知道的一切</a>   </p>
+<p><a href="http://blog.csdn.net/lmj623565791/article/details/50709663" target="_blank" rel="external">Android 6.0 运行时权限处理完全解析</a>   </p>
+<p><a href="http://www.jianshu.com/p/149dd57d175c" target="_blank" rel="external">6.0运行时权限的总结与实践</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/summary/" rel="tag"># summary</a>
+          
+            <a href="/tags/practice/" rel="tag"># practice</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/01/From2016To2017/" rel="next" title="2016 总结，2017 计划">
+                <i class="fa fa-chevron-left"></i> 2016 总结，2017 计划
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://obe5pxv6t.bkt.clouddn.com/ssyijiu.jpg"
+               alt="ssyijiu" />
+          <p class="site-author-name" itemprop="name">ssyijiu</p>
+           
+              <p class="site-description motion-element" itemprop="description">不负代码不负卿</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/ssyijiu" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/u/0dfb41dd9210" target="_blank" title="JianShu">
+                  
+                    <i class="fa fa-fw fa-book"></i>
+                  
+                  JianShu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一-运行时权限适配前"><span class="nav-number">1.</span> <span class="nav-text">一. 运行时权限适配前</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三-API-详解"><span class="nav-number">2.</span> <span class="nav-text">三. API 详解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四-权限适配最佳套路"><span class="nav-number">3.</span> <span class="nav-text">四. 权限适配最佳套路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#五-需要注意的地方"><span class="nav-number">4.</span> <span class="nav-text">五. 需要注意的地方</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#六-推荐几个类库"><span class="nav-number">5.</span> <span class="nav-text">六. 推荐几个类库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Thanks"><span class="nav-number">6.</span> <span class="nav-text">Thanks</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ssyijiu</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
