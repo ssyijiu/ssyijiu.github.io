@@ -1,0 +1,893 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="AndroidGuide,Android,Note," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="第7章：UI fragment 和 fragment 管理器
+Fragement 的引入使 Adnroid UI 设计更加灵活。
+
+Fragment 并不具备在屏幕上显示视图的能力，只有将它放在 Activity 的视图层级结构中，Fragment 才能显示在屏幕上。 
+
+id 的类型使用 UUID
+
+Fragment 的生命周期有托管它的 Activity 调用。
+
+
+
+Activity 添加">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 编程权威指南阅读笔记(二) Fragment、RecyclerView 相关">
+<meta property="og:url" content="http://ssyijiu.com/2017/04/23/AndroidGuide_2/index.html">
+<meta property="og:site_name" content="ssyijiu'home">
+<meta property="og:description" content="第7章：UI fragment 和 fragment 管理器
+Fragement 的引入使 Adnroid UI 设计更加灵活。
+
+Fragment 并不具备在屏幕上显示视图的能力，只有将它放在 Activity 的视图层级结构中，Fragment 才能显示在屏幕上。 
+
+id 的类型使用 UUID
+
+Fragment 的生命周期有托管它的 Activity 调用。
+
+
+
+Activity 添加">
+<meta property="og:image" content="http://obe5pxv6t.bkt.clouddn.com/complete_android_fragment_lifecycle.png">
+<meta property="og:image" content="http://obe5pxv6t.bkt.clouddn.com/use-fragment.png">
+<meta property="og:image" content="http://obe5pxv6t.bkt.clouddn.com/CompoundButton.png">
+<meta property="og:image" content="http://obe5pxv6t.bkt.clouddn.com/create_land_layout.png">
+<meta property="og:updated_time" content="2017-04-22T17:17:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android 编程权威指南阅读笔记(二) Fragment、RecyclerView 相关">
+<meta name="twitter:description" content="第7章：UI fragment 和 fragment 管理器
+Fragement 的引入使 Adnroid UI 设计更加灵活。
+
+Fragment 并不具备在屏幕上显示视图的能力，只有将它放在 Activity 的视图层级结构中，Fragment 才能显示在屏幕上。 
+
+id 的类型使用 UUID
+
+Fragment 的生命周期有托管它的 Activity 调用。
+
+
+
+Activity 添加">
+<meta name="twitter:image" content="http://obe5pxv6t.bkt.clouddn.com/complete_android_fragment_lifecycle.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"hide","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://ssyijiu.com/2017/04/23/AndroidGuide_2/"/>
+
+
+
+
+
+  <title> Android 编程权威指南阅读笔记(二) Fragment、RecyclerView 相关 | ssyijiu'home </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ssyijiu'home</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://ssyijiu.com/2017/04/23/AndroidGuide_2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ssyijiu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://obe5pxv6t.bkt.clouddn.com/ssyijiu.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ssyijiu'home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Android 编程权威指南阅读笔记(二) Fragment、RecyclerView 相关
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-23T00:00:00+08:00">
+                2017-04-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="第7章：UI-fragment-和-fragment-管理器"><a href="#第7章：UI-fragment-和-fragment-管理器" class="headerlink" title="第7章：UI fragment 和 fragment 管理器"></a>第7章：UI fragment 和 fragment 管理器</h2><ul>
+<li><p>Fragement 的引入使 Adnroid UI 设计更加灵活。</p>
+</li>
+<li><p>Fragment 并不具备在屏幕上显示视图的能力，只有将它放在 Activity 的视图层级结构中，Fragment 才能显示在屏幕上。 </p>
+</li>
+<li><p>id 的类型使用 UUID</p>
+</li>
+<li><p>Fragment 的生命周期有托管它的 Activity 调用。</p>
+</li>
+<li><p><img src="http://obe5pxv6t.bkt.clouddn.com/complete_android_fragment_lifecycle.png" alt=""></p>
+</li>
+<li><p>Activity 添加 Fragment 的两种方式</p>
+<ul>
+<li>在布局中写死（不够灵活，不推荐使用）</li>
+<li>使用代码动态添加</li>
+</ul>
+</li>
+<li><p>使用 FrameLayout 作为 Fragment 的容器视图。</p>
+</li>
+<li><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">FragmentManager fm = getFragmentManager();</div><div class="line"></div><div class="line"><span class="comment">// 内存重启或者屏幕旋转时，FragmentManager会先保存fragment队列，然后将fragment队列恢复到原来的状态。</span></div><div class="line"><span class="comment">// 此时如果 fragment 已经在 fragment 队列中了，直接获取就好。</span></div><div class="line">Fragment fragment = fm.findFragmentById(R.id.fragment_container);</div><div class="line"></div><div class="line"><span class="keyword">if</span>(fragment == <span class="keyword">null</span>) &#123;</div><div class="line">  fragment = <span class="keyword">new</span> CrimeFragment();</div><div class="line">  fm.beginTransaction()</div><div class="line">    .add(R.id.fragment_container,fragment)</div><div class="line">    .commit();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>FragmentTransaction 用来添加、移除、附加、分离、替换 fragment 队列中的 fragment。</p>
+</li>
+<li><p>FragmentManager 用来管理 fragment 的回退栈。</p>
+</li>
+<li><p>R.id.fragment_container 作用：</p>
+<ul>
+<li>告诉 Activity fragment 视图应该出现在什么位置。</li>
+<li>fragment 队列中唯一标示 fragment</li>
+</ul>
+</li>
+<li><p>如果要向 Activity 添加 多个 fragment，通常要分别为每个 fragment 创建不同ID的容。这句话不敢苟同。。 </p>
+</li>
+<li><p>内存重启或者屏幕旋转时，FragmentManager 会先保存 fragment 队列，然后将 fragment 队列到原来的状态。</p>
+</li>
+<li><p>FragmentManager 负责调用 Activity 的生命周期，add() 时候，onAttach、onCreate、onCreateView 等生命周期才会调用。</p>
+</li>
+<li><p>封装可复用组件是 Google 设计 fragment 的本意。</p>
+</li>
+<li><p>合理的使用 fragment 一个良好的原则：应用单屏至多使用 2~3 个 fragment。</p>
+<p>  <img src="http://obe5pxv6t.bkt.clouddn.com/use-fragment.png" alt=""></p>
+</li>
+</ul>
+<ul>
+<li>为什么使用 v4 包的 fragment：Google 在 Android 4.2 的时候支持 fragment 嵌套，如果使用 app 的 fragment，这个特性就无法在 4.0 实现，可能还有一些其他这样的例子。</li>
+</ul>
+<h2 id="第8章：使用布局与组件创建用户界面"><a href="#第8章：使用布局与组件创建用户界面" class="headerlink" title="第8章：使用布局与组件创建用户界面"></a>第8章：使用布局与组件创建用户界面</h2><ul>
+<li><p>Button setEnabled(false) 后，外观也会发生变化，变成灰色。</p>
+</li>
+<li><p>CheckBox extends CompoundButton </p>
+</li>
+<li><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">CheckBox.setOnCheckedChangeListener(<span class="keyword">new</span> CompoundButton.OnCheckedChangeListener() &#123;</div><div class="line">            <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCheckedChanged</span><span class="params">(CompoundButton buttonView, <span class="keyword">boolean</span> isChecked)</span> </span>&#123;</div><div class="line">                <span class="comment">// buttonView CheckBox 所在的背景 Button</span></div><div class="line">                <span class="comment">// 选中 isChecked 是 true，未选中 false </span></div><div class="line">            &#125;</div><div class="line">        &#125;);</div></pre></td></tr></table></figure>
+</li>
+<li><p>CompoundButton <img src="http://obe5pxv6t.bkt.clouddn.com/CompoundButton.png" alt=""></p>
+</li>
+<li><p>style 是 XML  资源文件，含有描述组件行为和外观的定义，可以自己定义。</p>
+</li>
+<li><p>Theme 是 style 的一种。</p>
+</li>
+<li><p>style=”?android:listSeparatorTextViewStyle” 在 TextView 下方加一个分割线，在不同的主题中样式可能有不同。</p>
+</li>
+<li><p>不以 layout 开头的属性作用于组件。</p>
+</li>
+<li><p>以 layout 开头的属性作用于组件的父组件，它们会告诉父布局如何安排自己的子元素。</p>
+</li>
+<li><p>创建水平布局 <img src="http://obe5pxv6t.bkt.clouddn.com/create_land_layout.png" alt=""></p>
+</li>
+<li><p>layout_weight 将 layout_width(layout_height) 分配后的剩余空间按照比例分配。</p>
+</li>
+<li><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 判断横竖屏</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">isScreenPortrait</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> Common.getAppResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="第9章：使用-RecyclerView-显示列表"><a href="#第9章：使用-RecyclerView-显示列表" class="headerlink" title="第9章：使用 RecyclerView 显示列表"></a>第9章：使用 RecyclerView 显示列表</h2><ul>
+<li><p>应用在内存里存多久，单例久存多久。</p>
+</li>
+<li><p>抽象 SingleFragmentActivity</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 其他一个 Activity 如果只放一个 fragment 的话继续这个类就好了</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">SingleFragmentActivity</span> <span class="keyword">extends</span> <span class="title">FragmentActivity</span> </span>&#123; </div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> Fragment <span class="title">createFragment</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span> </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123; </div><div class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState); </div><div class="line">        setContentView(R.layout.activity_fragment); </div><div class="line"> </div><div class="line">        FragmentManager fm = getSupportFragmentManager(); </div><div class="line">        Fragment fragment = fm.findFragmentById(R.id.fragment_container); </div><div class="line"> </div><div class="line">        <span class="keyword">if</span> (fragment == <span class="keyword">null</span>) &#123; </div><div class="line">            fragment = createFragment(); </div><div class="line">            fm.beginTransaction() </div><div class="line">                .add(R.id.fragment_container, fragment) </div><div class="line">                .commit(); </div><div class="line">        &#125; </div><div class="line">    &#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>顾名思义，RecyclerView所做的就是回收再利用，循环往复。</p>
+</li>
+<li><p>ViewHolder 只做一件事：容纳 View 视图。</p>
+</li>
+<li><p>RecyclerView.setAdapter() </p>
+<ul>
+<li>getItemCount 获取要显示的列表数量。</li>
+<li>onCreateViewHolder 创建 ViewHolder 及其要显示的视图。</li>
+<li>onBindViewHolder 将内容显示到视图上。</li>
+</ul>
+</li>
+<li><p>RecyclerView 点击事件，在 ViewHolder 的构造方法中：itemView.setOnClickListener(this);</p>
+</li>
+<li><p>adapter.notifyItemMoved(0,5); 将 5 位置的 View 覆盖到 0，有动画效果，数据不变，notifyDataSetChanged 后恢复原样。</p>
+</li>
+<li><p>RecyclerView 最简单代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Adapter</span></div><div class="line"><span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">CrimeAdapter</span> <span class="keyword">extends</span> <span class="title">RecyclerView</span>.<span class="title">Adapter</span>&lt;<span class="title">CrimeViewHolder</span>&gt; </span>&#123;</div><div class="line">      List&lt;Crime&gt; crimeList;</div><div class="line">      CrimeAdapter(List&lt;Crime&gt; crimeList) &#123;</div><div class="line">          <span class="keyword">this</span>.crimeList = crimeList;</div><div class="line">      &#125;</div><div class="line"></div><div class="line">      <span class="meta">@Override</span></div><div class="line">      <span class="function"><span class="keyword">public</span> CrimeViewHolder <span class="title">onCreateViewHolder</span><span class="params">(ViewGroup parent, <span class="keyword">int</span> viewType)</span> </span>&#123;</div><div class="line">          LayoutInflater layoutInflater = LayoutInflater.from(getActivity());</div><div class="line">          View view = layoutInflater</div><div class="line">              .inflate(R.layout.item_crime, parent, <span class="keyword">false</span>);</div><div class="line"></div><div class="line">          <span class="keyword">return</span> <span class="keyword">new</span> CrimeViewHolder(view);</div><div class="line">      &#125;</div><div class="line"></div><div class="line">      <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onBindViewHolder</span><span class="params">(CrimeViewHolder holder, <span class="keyword">int</span> position)</span> </span>&#123;</div><div class="line">          holder.bindCrime(crimeList.get(position));</div><div class="line">      &#125;</div><div class="line"></div><div class="line">      <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getItemCount</span><span class="params">()</span> </span>&#123;</div><div class="line">          <span class="keyword">return</span> crimeList.size();</div><div class="line">      &#125;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line"><span class="comment">// ViewHolder</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">CrimeViewHolder</span> <span class="keyword">extends</span> <span class="title">RecyclerView</span>.<span class="title">ViewHolder</span> <span class="keyword">implements</span> <span class="title">View</span>.<span class="title">OnClickListener</span> </span>&#123;</div><div class="line">      <span class="meta">@BindView</span>(R.id.item_crime_tv_title) TextView tvTitle;</div><div class="line">      <span class="meta">@BindView</span>(R.id.item_crime_cb_solved) CheckBox cbSolved;</div><div class="line">      <span class="meta">@BindView</span>(R.id.item_crime_tv_date) TextView tvDate;</div><div class="line"></div><div class="line">      <span class="keyword">private</span> Crime crime;</div><div class="line"></div><div class="line">      CrimeViewHolder(View itemView) &#123;</div><div class="line">          <span class="keyword">super</span>(itemView);</div><div class="line">          ButterKnife.bind(<span class="keyword">this</span>, itemView);</div><div class="line">          itemView.setOnClickListener(<span class="keyword">this</span>);</div><div class="line">      &#125;</div><div class="line"></div><div class="line">      <span class="function"><span class="keyword">void</span> <span class="title">bindCrime</span><span class="params">(Crime crime)</span> </span>&#123;</div><div class="line">          <span class="keyword">this</span>.crime = crime;</div><div class="line">          tvTitle.setText(crime.title);</div><div class="line">          cbSolved.setChecked(crime.solved);</div><div class="line">          tvDate.setText(crime.date.toString());</div><div class="line">      &#125;</div><div class="line">      </div><div class="line">      <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</div><div class="line">          ToastUtil.show(crime.title + <span class="string">" clicked!"</span>);</div><div class="line">      &#125;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">// 使用</span></div><div class="line">  crimeRecycler.setLayoutManager(<span class="keyword">new</span> LinearLayoutManager(getActivity()));</div><div class="line">  adapter = <span class="keyword">new</span> CrimeAdapter(CrimeLab.get().getCrimeList());</div><div class="line">  crimeRecycler.setAdapter(adapter);</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="第10章：使用-fragment-argument"><a href="#第10章：使用-fragment-argument" class="headerlink" title="第10章：使用 fragment argument"></a>第10章：使用 fragment argument</h2><ul>
+<li><p>fragment 获取 Activity Intent 中数据的两种方法</p>
+<ul>
+<li><p>直接获取 getActivity.getIntent().getSerializableExtra(CrimeActivity.EXTRA_CRIME_ID); </p>
+<ul>
+<li>优点：简单方便</li>
+<li>缺点：强耦合，这个 Fragment 只能用于 CrimeActivity，失去了 Fragment 的复用性。</li>
+</ul>
+</li>
+<li><p>使用 fragment argument</p>
+<ul>
+<li><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 1. 修改 fragment 的创建方法</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Fragment <span class="title">newInstance</span><span class="params">(UUID id)</span> </span>&#123;</div><div class="line">        Bundle args = <span class="keyword">new</span> Bundle();</div><div class="line">        args.putSerializable(ARG_CRIME_ID,id);</div><div class="line">        CrimeFragment fragment = <span class="keyword">new</span> CrimeFragment();</div><div class="line">        fragment.setArguments(args);</div><div class="line">        <span class="keyword">return</span> fragment;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 2. Activity 创建 fragment 时传入 id</span></div><div class="line">CrimeFragment fragment = CrimeFragment.newInstance(crimeId);</div><div class="line"></div><div class="line"><span class="comment">// 3. 在 fragment 中获取 id</span></div><div class="line">UUID crimeId = (UUID) getArguments().getSerializable(ARG_CRIME_ID);</div></pre></td></tr></table></figure>
+</li>
+<li><p>这种方法使用稍微复杂，但是保证了 fragment 的通用性。</p>
+</li>
+<li><p>为什么不使用一些变量保存数据呢？内存重启是变量保存的数据被清空。</p>
+</li>
+</ul>
+</li>
+<li><p>fragment 的生命周期会与托管其的 Activity 的生命周期保持一致，比如当 Activity 调用 onResume 的时候，它托管的 fragment 也会调用这个方法。</p>
+</li>
+<li><p>fragment 拥有 startActivityForResult、onActivityResult 但是没有 setResult 方法，需要调用 getActivity.setResult </p>
+</li>
+<li><p>fragment 向另一个 fragment 传递数据并获取返回值流程：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 1. startActivityForResult</span></div><div class="line">Intent intent = CrimeActivity.newIntent(context, crime.id, positon);</div><div class="line">startActivityForResult(intent,REQUEST_CODE_CRIME);</div><div class="line"></div><div class="line"><span class="comment">// 2. 在 Activity 中解析 Intent 中的数据</span></div><div class="line">crimePosition = intent.getIntExtra(EXTRA_CRIME_POSITION, <span class="number">0</span>);</div><div class="line"></div><div class="line"><span class="comment">// 3. 使用 argument 传递给 fragment</span></div><div class="line"><span class="keyword">return</span> CrimeFragment.newInstance(crimeId, crimePosition);</div><div class="line"></div><div class="line"><span class="comment">// 4. 在 fragment 中解析出数据</span></div><div class="line"><span class="keyword">int</span> crimePosition = arguments.getInt(ARG_CRIME_POSITION);</div><div class="line"></div><div class="line"><span class="comment">// 5. 使用 Activity setResult</span></div><div class="line">context.setResult(RESULT_CODE_CRIME_POSITION,</div><div class="line">            <span class="keyword">new</span> Intent().putExtra(RESULT_CRIME_POSITION, crimePosition));</div><div class="line"><span class="comment">// 6. 在 fragment 中提供一个解析数据的方法</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">resultPosition</span><span class="params">(Intent intent)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (intent != <span class="keyword">null</span>) &#123;</div><div class="line">      <span class="keyword">return</span> intent.getIntExtra(RESULT_CRIME_POSITION, <span class="number">0</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 7. 在上一级 fragment 中解析出数据</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onActivityResult</span><span class="params">(<span class="keyword">int</span> requestCode, <span class="keyword">int</span> resultCode, Intent data)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span>(requestCode == REQUEST_CODE_CRIME</div><div class="line">       &amp;&amp; resultCode == CrimeFragment.RESULT_CODE_CRIME_POSITION) &#123;</div><div class="line">      <span class="keyword">int</span> position = CrimeFragment.resultPosition(data);</div><div class="line">      updateUiItem(position);</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/AndroidGuide/" rel="tag"># AndroidGuide</a>
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/Note/" rel="tag"># Note</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/19/AndroidGuide_1/" rel="next" title="Android 编程权威指南阅读笔记(一) Activity 相关">
+                <i class="fa fa-chevron-left"></i> Android 编程权威指南阅读笔记(一) Activity 相关
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://obe5pxv6t.bkt.clouddn.com/ssyijiu.jpg"
+               alt="ssyijiu" />
+          <p class="site-author-name" itemprop="name">ssyijiu</p>
+           
+              <p class="site-description motion-element" itemprop="description">不负代码不负卿</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/ssyijiu" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/u/0dfb41dd9210" target="_blank" title="JianShu">
+                  
+                    <i class="fa fa-fw fa-book"></i>
+                  
+                  JianShu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#第7章：UI-fragment-和-fragment-管理器"><span class="nav-number">1.</span> <span class="nav-text">第7章：UI fragment 和 fragment 管理器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第8章：使用布局与组件创建用户界面"><span class="nav-number">2.</span> <span class="nav-text">第8章：使用布局与组件创建用户界面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第9章：使用-RecyclerView-显示列表"><span class="nav-number">3.</span> <span class="nav-text">第9章：使用 RecyclerView 显示列表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第10章：使用-fragment-argument"><span class="nav-number">4.</span> <span class="nav-text">第10章：使用 fragment argument</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ssyijiu</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
