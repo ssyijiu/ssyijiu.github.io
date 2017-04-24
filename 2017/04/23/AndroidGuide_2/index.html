@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="AndroidGuide,Android,Note," />
+  <meta name="keywords" content="Android,AndroidGuide,Note," />
 
 
 
@@ -87,54 +87,48 @@
 
 
 
-<meta name="description" content="第7章：UI fragment 和 fragment 管理器
+<meta name="description" content="版权声明：  本文来自书生依旧简书，转载请注明出处。
+
+第7章：UI fragment 和 fragment 管理器
 Fragement 的引入使 Adnroid UI 设计更加灵活。
 
 Fragment 并不具备在屏幕上显示视图的能力，只有将它放在 Activity 的视图层级结构中，Fragment 才能显示在屏幕上。 
 
 id 的类型使用 UUID
 
-Fragment 的生命周期有托管它的 Activity 调用。
-
-
-
-Activity 添加">
+Fragment 的生命周期有托管它的">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android 编程权威指南阅读笔记(二) Fragment、RecyclerView 相关">
 <meta property="og:url" content="http://ssyijiu.com/2017/04/23/AndroidGuide_2/index.html">
 <meta property="og:site_name" content="ssyijiu'home">
-<meta property="og:description" content="第7章：UI fragment 和 fragment 管理器
+<meta property="og:description" content="版权声明：  本文来自书生依旧简书，转载请注明出处。
+
+第7章：UI fragment 和 fragment 管理器
 Fragement 的引入使 Adnroid UI 设计更加灵活。
 
 Fragment 并不具备在屏幕上显示视图的能力，只有将它放在 Activity 的视图层级结构中，Fragment 才能显示在屏幕上。 
 
 id 的类型使用 UUID
 
-Fragment 的生命周期有托管它的 Activity 调用。
-
-
-
-Activity 添加">
-<meta property="og:image" content="http://obe5pxv6t.bkt.clouddn.com/complete_android_fragment_lifecycle.png">
-<meta property="og:image" content="http://obe5pxv6t.bkt.clouddn.com/use-fragment.png">
-<meta property="og:image" content="http://obe5pxv6t.bkt.clouddn.com/CompoundButton.png">
-<meta property="og:image" content="http://obe5pxv6t.bkt.clouddn.com/create_land_layout.png">
-<meta property="og:updated_time" content="2017-04-22T17:17:45.000Z">
+Fragment 的生命周期有托管它的">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1342220-7f1e6d6c072ae14f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1342220-95c58b411785164f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1342220-91ed1bd548eb3d48.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1342220-e11fff822aafa1ea.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-04-24T12:02:41.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android 编程权威指南阅读笔记(二) Fragment、RecyclerView 相关">
-<meta name="twitter:description" content="第7章：UI fragment 和 fragment 管理器
+<meta name="twitter:description" content="版权声明：  本文来自书生依旧简书，转载请注明出处。
+
+第7章：UI fragment 和 fragment 管理器
 Fragement 的引入使 Adnroid UI 设计更加灵活。
 
 Fragment 并不具备在屏幕上显示视图的能力，只有将它放在 Activity 的视图层级结构中，Fragment 才能显示在屏幕上。 
 
 id 的类型使用 UUID
 
-Fragment 的生命周期有托管它的 Activity 调用。
-
-
-
-Activity 添加">
-<meta name="twitter:image" content="http://obe5pxv6t.bkt.clouddn.com/complete_android_fragment_lifecycle.png">
+Fragment 的生命周期有托管它的">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1342220-7f1e6d6c072ae14f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -391,7 +385,10 @@ Activity 添加">
       
 
       
-        <h2 id="第7章：UI-fragment-和-fragment-管理器"><a href="#第7章：UI-fragment-和-fragment-管理器" class="headerlink" title="第7章：UI fragment 和 fragment 管理器"></a>第7章：UI fragment 和 fragment 管理器</h2><ul>
+        <blockquote>
+<p>版权声明：  本文来自<a href="http://www.jianshu.com/p/1b6e33aaddc3" target="_blank" rel="external">书生依旧</a>简书，转载请注明出处。</p>
+</blockquote>
+<h2 id="第7章：UI-fragment-和-fragment-管理器"><a href="#第7章：UI-fragment-和-fragment-管理器" class="headerlink" title="第7章：UI fragment 和 fragment 管理器"></a>第7章：UI fragment 和 fragment 管理器</h2><ul>
 <li><p>Fragement 的引入使 Adnroid UI 设计更加灵活。</p>
 </li>
 <li><p>Fragment 并不具备在屏幕上显示视图的能力，只有将它放在 Activity 的视图层级结构中，Fragment 才能显示在屏幕上。 </p>
@@ -400,7 +397,7 @@ Activity 添加">
 </li>
 <li><p>Fragment 的生命周期有托管它的 Activity 调用。</p>
 </li>
-<li><p><img src="http://obe5pxv6t.bkt.clouddn.com/complete_android_fragment_lifecycle.png" alt=""></p>
+<li><p><img src="http://upload-images.jianshu.io/upload_images/1342220-7f1e6d6c072ae14f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 </li>
 <li><p>Activity 添加 Fragment 的两种方式</p>
 <ul>
@@ -410,7 +407,7 @@ Activity 添加">
 </li>
 <li><p>使用 FrameLayout 作为 Fragment 的容器视图。</p>
 </li>
-<li><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">FragmentManager fm = getFragmentManager();</div><div class="line"></div><div class="line"><span class="comment">// 内存重启或者屏幕旋转时，FragmentManager会先保存fragment队列，然后将fragment队列恢复到原来的状态。</span></div><div class="line"><span class="comment">// 此时如果 fragment 已经在 fragment 队列中了，直接获取就好。</span></div><div class="line">Fragment fragment = fm.findFragmentById(R.id.fragment_container);</div><div class="line"></div><div class="line"><span class="keyword">if</span>(fragment == <span class="keyword">null</span>) &#123;</div><div class="line">  fragment = <span class="keyword">new</span> CrimeFragment();</div><div class="line">  fm.beginTransaction()</div><div class="line">    .add(R.id.fragment_container,fragment)</div><div class="line">    .commit();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<li><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">FragmentManager fm = getFragmentManager();</div><div class="line"></div><div class="line"><span class="comment">// 内存重启或者屏幕旋转时，FragmentManager 会先保存 fragment 队列，然后将 fragment 队列恢复到原来的状态。</span></div><div class="line"><span class="comment">// 此时如果 fragment 已经在 fragment 队列中了，直接获取就好。</span></div><div class="line">Fragment fragment = fm.findFragmentById(R.id.fragment_container);</div><div class="line"></div><div class="line"><span class="keyword">if</span>(fragment == <span class="keyword">null</span>) &#123;</div><div class="line">  fragment = <span class="keyword">new</span> CrimeFragment();</div><div class="line">  fm.beginTransaction()</div><div class="line">    .add(R.id.fragment_container,fragment)</div><div class="line">    .commit();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </li>
 <li><p>FragmentTransaction 用来添加、移除、附加、分离、替换 fragment 队列中的 fragment。</p>
 </li>
@@ -431,7 +428,7 @@ Activity 添加">
 <li><p>封装可复用组件是 Google 设计 fragment 的本意。</p>
 </li>
 <li><p>合理的使用 fragment 一个良好的原则：应用单屏至多使用 2~3 个 fragment。</p>
-<p>  <img src="http://obe5pxv6t.bkt.clouddn.com/use-fragment.png" alt=""></p>
+<p>  <img src="http://upload-images.jianshu.io/upload_images/1342220-95c58b411785164f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 </li>
 </ul>
 <ul>
@@ -444,7 +441,7 @@ Activity 添加">
 </li>
 <li><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">CheckBox.setOnCheckedChangeListener(<span class="keyword">new</span> CompoundButton.OnCheckedChangeListener() &#123;</div><div class="line">            <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCheckedChanged</span><span class="params">(CompoundButton buttonView, <span class="keyword">boolean</span> isChecked)</span> </span>&#123;</div><div class="line">                <span class="comment">// buttonView CheckBox 所在的背景 Button</span></div><div class="line">                <span class="comment">// 选中 isChecked 是 true，未选中 false </span></div><div class="line">            &#125;</div><div class="line">        &#125;);</div></pre></td></tr></table></figure>
 </li>
-<li><p>CompoundButton <img src="http://obe5pxv6t.bkt.clouddn.com/CompoundButton.png" alt=""></p>
+<li><p>CompoundButton <img src="http://upload-images.jianshu.io/upload_images/1342220-91ed1bd548eb3d48.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 </li>
 <li><p>style 是 XML  资源文件，含有描述组件行为和外观的定义，可以自己定义。</p>
 </li>
@@ -456,11 +453,11 @@ Activity 添加">
 </li>
 <li><p>以 layout 开头的属性作用于组件的父组件，它们会告诉父布局如何安排自己的子元素。</p>
 </li>
-<li><p>创建水平布局 <img src="http://obe5pxv6t.bkt.clouddn.com/create_land_layout.png" alt=""></p>
+<li><p>创建水平布局 <img src="http://upload-images.jianshu.io/upload_images/1342220-e11fff822aafa1ea.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 </li>
 <li><p>layout_weight 将 layout_width(layout_height) 分配后的剩余空间按照比例分配。</p>
 </li>
-<li><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 判断横竖屏</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">isScreenPortrait</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> Common.getAppResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<li><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">  <span class="comment">// 判断横竖屏</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">isScreenPortrait</span><span class="params">()</span> </span>&#123;</div><div class="line">          <span class="keyword">return</span> Common.getAppResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </li>
 </ul>
 <h2 id="第9章：使用-RecyclerView-显示列表"><a href="#第9章：使用-RecyclerView-显示列表" class="headerlink" title="第9章：使用 RecyclerView 显示列表"></a>第9章：使用 RecyclerView 显示列表</h2><ul>
@@ -511,9 +508,8 @@ Activity 添加">
 </li>
 <li><p>fragment 拥有 startActivityForResult、onActivityResult 但是没有 setResult 方法，需要调用 getActivity.setResult </p>
 </li>
-<li><p>fragment 向另一个 fragment 传递数据并获取返回值流程：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 1. startActivityForResult</span></div><div class="line">Intent intent = CrimeActivity.newIntent(context, crime.id, positon);</div><div class="line">startActivityForResult(intent,REQUEST_CODE_CRIME);</div><div class="line"></div><div class="line"><span class="comment">// 2. 在 Activity 中解析 Intent 中的数据</span></div><div class="line">crimePosition = intent.getIntExtra(EXTRA_CRIME_POSITION, <span class="number">0</span>);</div><div class="line"></div><div class="line"><span class="comment">// 3. 使用 argument 传递给 fragment</span></div><div class="line"><span class="keyword">return</span> CrimeFragment.newInstance(crimeId, crimePosition);</div><div class="line"></div><div class="line"><span class="comment">// 4. 在 fragment 中解析出数据</span></div><div class="line"><span class="keyword">int</span> crimePosition = arguments.getInt(ARG_CRIME_POSITION);</div><div class="line"></div><div class="line"><span class="comment">// 5. 使用 Activity setResult</span></div><div class="line">context.setResult(RESULT_CODE_CRIME_POSITION,</div><div class="line">            <span class="keyword">new</span> Intent().putExtra(RESULT_CRIME_POSITION, crimePosition));</div><div class="line"><span class="comment">// 6. 在 fragment 中提供一个解析数据的方法</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">resultPosition</span><span class="params">(Intent intent)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (intent != <span class="keyword">null</span>) &#123;</div><div class="line">      <span class="keyword">return</span> intent.getIntExtra(RESULT_CRIME_POSITION, <span class="number">0</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 7. 在上一级 fragment 中解析出数据</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onActivityResult</span><span class="params">(<span class="keyword">int</span> requestCode, <span class="keyword">int</span> resultCode, Intent data)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span>(requestCode == REQUEST_CODE_CRIME</div><div class="line">       &amp;&amp; resultCode == CrimeFragment.RESULT_CODE_CRIME_POSITION) &#123;</div><div class="line">      <span class="keyword">int</span> position = CrimeFragment.resultPosition(data);</div><div class="line">      updateUiItem(position);</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
+<li><p>两个不同 Activity 中的 fragment 之间传递数据并获取返回值流程：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 1. startActivityForResult</span></div><div class="line">Intent intent = CrimeActivity.newIntent(context, crime.id, positon);</div><div class="line">startActivityForResult(intent,REQUEST_CODE_CRIME);</div><div class="line"></div><div class="line"><span class="comment">// 2. 在 Activity 中解析 Intent 中的数据</span></div><div class="line">crimePosition = intent.getIntExtra(EXTRA_CRIME_POSITION, <span class="number">0</span>);</div><div class="line"></div><div class="line"><span class="comment">// 3. 使用 argument 传递给 fragment</span></div><div class="line"><span class="keyword">return</span> CrimeFragment.newInstance(crimeId, crimePosition);</div><div class="line"></div><div class="line"><span class="comment">// 4. 在 fragment 中解析出数据</span></div><div class="line"><span class="keyword">int</span> crimePosition = arguments.getInt(ARG_CRIME_POSITION);</div><div class="line"></div><div class="line"><span class="comment">// 5. 使用 Activity setResult</span></div><div class="line">context.setResult(RESULT_CODE_CRIME_POSITION,</div><div class="line">            <span class="keyword">new</span> Intent().putExtra(RESULT_CRIME_POSITION, crimePosition));</div><div class="line"><span class="comment">// 6. 在 fragment 中提供一个解析数据的方法</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">resultPosition</span><span class="params">(Intent intent)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (intent != <span class="keyword">null</span>) &#123;</div><div class="line">      <span class="keyword">return</span> intent.getIntExtra(RESULT_CRIME_POSITION, <span class="number">0</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 7. 在上一级 fragment 中解析出数据</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onActivityResult</span><span class="params">(<span class="keyword">int</span> requestCode, <span class="keyword">int</span> resultCode, Intent data)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span>(requestCode == REQUEST_CODE_CRIME</div><div class="line">       &amp;&amp; resultCode == CrimeFragment.RESULT_CODE_CRIME_POSITION) &#123;</div><div class="line">      <span class="keyword">int</span> position = CrimeFragment.resultPosition(data);</div><div class="line">      updateUiItem(position);</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></li>
 </ul>
 </li>
 </ul>
@@ -540,9 +536,9 @@ Activity 添加">
       
         <div class="post-tags">
           
-            <a href="/tags/AndroidGuide/" rel="tag"># AndroidGuide</a>
-          
             <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/AndroidGuide/" rel="tag"># AndroidGuide</a>
           
             <a href="/tags/Note/" rel="tag"># Note</a>
           
