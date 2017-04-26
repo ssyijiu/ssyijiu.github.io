@@ -1,0 +1,923 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="AndroidGuide,Android,Note," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="版权声明：  本文来自书生依旧简书，转载请注明出处。
+
+第11章：使用 ViewPager
+ViewPager 和 fragment 一起使用
+ 123456789101112FragmentManager fragmentManager = getSupportFragmentManager();   // FragmentStatePagerAdapter 负责 ViewPager 和 Fr">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 编程权威指南阅读笔记(三) ViewPager、DialogFragment、OptionsMenus、ViewStub 相关">
+<meta property="og:url" content="http://ssyijiu.com/2017/04/26/AndroidGuide_3/index.html">
+<meta property="og:site_name" content="ssyijiu'home">
+<meta property="og:description" content="版权声明：  本文来自书生依旧简书，转载请注明出处。
+
+第11章：使用 ViewPager
+ViewPager 和 fragment 一起使用
+ 123456789101112FragmentManager fragmentManager = getSupportFragmentManager();   // FragmentStatePagerAdapter 负责 ViewPager 和 Fr">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1342220-f81f2ed2daae2082.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1342220-79e4559d5d70769d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1342220-101bc6d68b706abc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1342220-c0fdd483a8273ca4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1342220-e9adc7efce8fb90d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-04-26T15:39:03.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android 编程权威指南阅读笔记(三) ViewPager、DialogFragment、OptionsMenus、ViewStub 相关">
+<meta name="twitter:description" content="版权声明：  本文来自书生依旧简书，转载请注明出处。
+
+第11章：使用 ViewPager
+ViewPager 和 fragment 一起使用
+ 123456789101112FragmentManager fragmentManager = getSupportFragmentManager();   // FragmentStatePagerAdapter 负责 ViewPager 和 Fr">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1342220-f81f2ed2daae2082.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"hide","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://ssyijiu.com/2017/04/26/AndroidGuide_3/"/>
+
+
+
+
+
+  <title> Android 编程权威指南阅读笔记(三) ViewPager、DialogFragment、OptionsMenus、ViewStub 相关 | ssyijiu'home </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ssyijiu'home</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://ssyijiu.com/2017/04/26/AndroidGuide_3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ssyijiu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://obe5pxv6t.bkt.clouddn.com/ssyijiu.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ssyijiu'home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Android 编程权威指南阅读笔记(三) ViewPager、DialogFragment、OptionsMenus、ViewStub 相关
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-26T00:00:00+08:00">
+                2017-04-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>版权声明：  本文来自<a href="http://www.jianshu.com/p/628f138cf995" target="_blank" rel="external">书生依旧</a>简书，转载请注明出处。</p>
+</blockquote>
+<h2 id="第11章：使用-ViewPager"><a href="#第11章：使用-ViewPager" class="headerlink" title="第11章：使用 ViewPager"></a>第11章：使用 ViewPager</h2><ul>
+<li><p>ViewPager 和 fragment 一起使用</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">FragmentManager fragmentManager = getSupportFragmentManager();</div><div class="line">   <span class="comment">// FragmentStatePagerAdapter 负责 ViewPager 和 Fragment 协同工作</span></div><div class="line">   viewPagerRoot.setAdapter(<span class="keyword">new</span> FragmentStatePagerAdapter(fragmentManager) &#123;</div><div class="line">         <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> Fragment <span class="title">getItem</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</div><div class="line">           	Crime crime = crimeList.get(position);</div><div class="line">           	<span class="keyword">return</span> CrimeFragment.newInstance(crime.id,position);</div><div class="line">         &#125;</div><div class="line"></div><div class="line">         <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCount</span><span class="params">()</span> </span>&#123;</div><div class="line">           	<span class="keyword">return</span> crimeList.size();</div><div class="line">         &#125;</div><div class="line">   &#125;);</div></pre></td></tr></table></figure>
+</li>
+<li><p>ViewPager 默认加载当前屏幕的列表项，以及左右相邻的页面，可以使用 setOffscreenPageLimit(int) 定制预加载左右页面的数量。</p>
+<ul>
+<li><p>FragmentStatePagerAdapter 与 FragmentPagerAdapter</p>
+</li>
+<li><p>FragmentStatePagerAdapter 会销毁不需要的 fragment ，事务提交后，FragmentManager 中的 fragment 会被彻底移除（调用 FragmentTransaction 的 remove 方法）。</p>
+</li>
+<li>FragmentPagerAdapter 对于不需要的 fragment 会调用 FragmentTransaction 的 detach 方法，只是销毁了 fragment 的视图，fragment 的实例还保存在 FragmentManager 中，FragmentPagerAdapter 创建 fragment 永远保存在内存中，不会被销毁。</li>
+<li>FragmentStatePagerAdapter 更省内存，FragmentPagerAdapter 适用于展示少量而固定的 fragment。</li>
+</ul>
+</li>
+<li><p>使用 Dump Java Heap 检测 CrimeFragment 的数量，在 ViewPager 中滑动 20 次，点击 GC 之后</p>
+<ul>
+<li>使用 FragmentStatePagerAdapter 内存中存在 3 个 CrimeFragment </li>
+<li><img src="http://upload-images.jianshu.io/upload_images/1342220-f81f2ed2daae2082.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></li>
+<li>使用 FragmentPagerAdapter 内存中存在 23 个 CrimeFragment  </li>
+<li><img src="http://upload-images.jianshu.io/upload_images/1342220-79e4559d5d70769d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></li>
+</ul>
+</li>
+<li><p>PageAdapter 的使用：</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ViewPagerAdapter</span> <span class="keyword">extends</span> <span class="title">PagerAdapter</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCount</span><span class="params">()</span> </span>&#123;</div><div class="line">      	<span class="keyword">return</span> list.size();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isViewFromObject</span><span class="params">(View view, Object object)</span> </span>&#123;</div><div class="line">      	<span class="keyword">return</span> view == object;</div><div class="line">    &#125;</div><div class="line">	</div><div class="line">    <span class="comment">// 创建 pager</span></div><div class="line">    <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> Object <span class="title">instantiateItem</span><span class="params">(ViewGroup container, <span class="keyword">int</span> position)</span> </span>&#123;</div><div class="line">        ImageView imageView = <span class="keyword">new</span> ImageView(context);</div><div class="line">        container.addView(imageView);</div><div class="line">        <span class="keyword">return</span> imageView;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">   	<span class="comment">// 移除 pager</span></div><div class="line">    <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">destroyItem</span><span class="params">(ViewGroup container, <span class="keyword">int</span> position, Object object)</span> </span>&#123;</div><div class="line">      	container.removeView((View) object);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>FragmentStatePagerAdapter 和 FragmentPagerAdapter  都继承了 PageAdapter  并重写了 isViewFromObject 、insubstantial 、destroyItem 方法。它们的 getItem 方法都会在 insubstantial  中调用，在 destroyItem 一个使用 FragmentTransaction 的 remove ，一个使用 FragmentTransaction 的 detach。</p>
+</li>
+</ul>
+<h2 id="第12章：对话框"><a href="#第12章：对话框" class="headerlink" title="第12章：对话框"></a>第12章：对话框</h2><ul>
+<li><p>AppCompat 兼容库能将部分最新系统的特色功能移植到 Android 旧版本系统中。</p>
+</li>
+<li><p>单独使用 AlertDialog 是，旋转屏幕 AlertDialog 会消失。将 AlertDialog 封装在 DialogFragment 则不会出现此问题（FragmentManager 会恢复 fragment，fragment 恢复 AlertDialog ）。</p>
+</li>
+<li><p>在 DialogFragment 中的 onCreateDialog 方法创建 AlertDialog</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> Dialog <span class="title">onCreateDialog</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line"></div><div class="line">    AlertDialog.Builder builder = <span class="keyword">new</span> AlertDialog.Builder(context);</div><div class="line">    builder.setPositiveButton(android.R.string.ok,<span class="keyword">null</span>)</div><div class="line">    .setView(R.layout.dialog_datepicker);</div><div class="line">    <span class="keyword">return</span> builder.create();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>AlertDialog 有三种类型的按钮：Positive、Negative 和 Neutral</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">AlertDialog.Builder builder = <span class="keyword">new</span> AlertDialog.Builder(context);</div><div class="line">builder</div><div class="line">  .setPositiveButton(android.R.string.ok,<span class="keyword">null</span>)</div><div class="line">  .setNegativeButton(android.R.string.cancel,<span class="keyword">null</span>)</div><div class="line">  .setNeutralButton(android.R.string.copy,<span class="keyword">null</span>)</div><div class="line">  .setView(R.layout.dialog_datepicker);</div><div class="line"><span class="keyword">return</span> builder.create();</div></pre></td></tr></table></figure>
+<p>上述代码的按钮效果，主要看按钮：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1342220-101bc6d68b706abc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>注意：PositiveButton 总是在最右边，NeutralButton 总是在最左边，NeutralButton 如果有 PositiveButton 的话在中间，没有的话在最右边。</p>
+</li>
+<li><p>显示 DialogFragment</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">show</span><span class="params">(FragmentManager manager, String tag)</span> </span></div><div class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">show</span><span class="params">(FragmentTransaction transaction, String tag)</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>自定义 AlertDialog 布局，使用 AlertDialog.Builder#setView</p>
+</li>
+<li><p>设备配置改变时，具有 id 属性的视图可以保存运行状态，在本例中为 DatePicker 添加 id ，选中一个日期，旋转屏幕后会恢复你选中的日期，去掉 id 后则不会有这个效果。</p>
+</li>
+<li><p>同一个 Activity 托管的两个 fragment 之间传递数据</p>
+<ul>
+<li><img src="http://upload-images.jianshu.io/upload_images/1342220-c0fdd483a8273ca4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></li>
+</ul>
+<p>​</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 1. 在 DatePickerFragment 新建 newInstance(date) 方法</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> DatePickerFragment <span class="title">newInstance</span><span class="params">(Date date)</span> </span>&#123;</div><div class="line">    Bundle args = <span class="keyword">new</span> Bundle();</div><div class="line">    args.putSerializable(ARGS_CRIME_DATE, date);</div><div class="line">    DatePickerFragment fragment = <span class="keyword">new</span> DatePickerFragment();</div><div class="line">    fragment.setArguments(args);</div><div class="line">    <span class="keyword">return</span> fragment;</div><div class="line">&#125;</div><div class="line"><span class="comment">// 2. setTargetFragment(Fragment fragment, int requestCode) </span></div><div class="line">FragmentManager manager = getFragmentManager();</div><div class="line">DatePickerFragment dialog = DatePickerFragment.newInstance(crime.date);</div><div class="line"><span class="comment">// 设置要返回数据的 fragment 和 requestCode</span></div><div class="line">dialog.setTargetFragment(CrimeFragment.<span class="keyword">this</span>, REQUEST_CRIME_DATE);</div><div class="line">dialog.show(manager, dialog.getClass().getSimpleName());</div><div class="line"></div><div class="line"><span class="comment">// 3. 使用 getTargetFragment().onActivityResult 返回数据</span></div><div class="line"> <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">setResult</span><span class="params">(<span class="keyword">int</span> resultCode, Date date)</span> </span>&#123;</div><div class="line">     <span class="keyword">if</span> (getTargetFragment() != <span class="keyword">null</span>) &#123;</div><div class="line">       Intent intent = <span class="keyword">new</span> Intent();</div><div class="line">       intent.putExtra(EXTRA_CRIME_DATE, date);  <span class="comment">// 要返回的数据</span></div><div class="line">       getTargetFragment().onActivityResult(getTargetRequestCode(), resultCode, intent);</div><div class="line">       <span class="comment">// getTargetFragment 前面 setTargetFragment 的 fragment 参数</span></div><div class="line">       <span class="comment">// getTargetRequestCode 前面 setTargetFragment 的请求码</span></div><div class="line">     &#125;</div><div class="line"> &#125;</div><div class="line"></div><div class="line"><span class="comment">// 调用</span></div><div class="line">setResult(REQUEST_CRIME_DATE, date);</div><div class="line"></div><div class="line"><span class="comment">// 4. 封装解析数据的方法（这里做了一些严谨性的判空）</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Date <span class="title">resultDate</span><span class="params">(Intent intent)</span> </span>&#123;</div><div class="line">    Date date = <span class="keyword">null</span>;</div><div class="line">    <span class="keyword">if</span>(intent != <span class="keyword">null</span>) &#123;</div><div class="line">      	date = (Date) intent.getSerializableExtra(EXTRA_CRIME_DATE);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">if</span>(date != <span class="keyword">null</span>) &#123;</div><div class="line">      	<span class="keyword">return</span> date;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Date();</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 5. 在要返回数据的 fragment 中重写 onActivityResult</span></div><div class="line"><span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onActivityResult</span><span class="params">(<span class="keyword">int</span> requestCode, <span class="keyword">int</span> resultCode, Intent data)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span>(requestCode == REQUEST_CRIME_DATE</div><div class="line">       &amp;&amp; resultCode == DatePickerFragment.REQUEST_CRIME_DATE) &#123;</div><div class="line">        Date date = DatePickerFragment.resultDate(data);</div><div class="line">        crime.date = date;</div><div class="line">        updateDate();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="第13章：工具栏"><a href="#第13章：工具栏" class="headerlink" title="第13章：工具栏"></a>第13章：工具栏</h2><ul>
+<li><p>AppCompat 库自带 3 中主题：</p>
+<ul>
+<li>Theme.AppCompat 黑色主题</li>
+<li>Theme.AppCompat.Light 浅色主题</li>
+<li>Theme.AppCompat.Light.DarkActionBar 带黑色工具栏的浅色主题</li>
+</ul>
+</li>
+<li><p>菜单是一种类似布局的资源，创建方法：右键Res -&gt; New Android resource file -&gt; 选择 Menu -&gt; OK</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">menu</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line">    <span class="attr">xmlns:app</span>=<span class="string">"http://schemas.android.com/apk/res-auto"</span></div><div class="line">    &gt;</div><div class="line">    <span class="tag">&lt;<span class="name">item</span></span></div><div class="line">        <span class="attr">android:id</span>=<span class="string">"@+id/menu_item_new_crime"</span></div><div class="line">        <span class="attr">android:icon</span>=<span class="string">"@drawable/ic_menu_add"</span></div><div class="line">        <span class="attr">android:title</span>=<span class="string">"@string/new_crime"</span></div><div class="line">        <span class="attr">app:showAsAction</span>=<span class="string">"ifRoom|withText"</span>/&gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">item</span></span></div><div class="line">        <span class="attr">android:id</span>=<span class="string">"@+id/menu_item_show_subtitle"</span></div><div class="line">        <span class="attr">android:title</span>=<span class="string">"@string/show_subtitle"</span></div><div class="line">        <span class="attr">app:showAsAction</span>=<span class="string">"ifRoom"</span>/&gt;</div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">menu</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+<li><p>app:showAsAction 指定菜单选项在工具栏上显示还是隐藏</p>
+<ul>
+<li>never  隐藏</li>
+<li>always 显示</li>
+<li>ifRoom 空间够的话则显示，不够隐藏</li>
+<li>ifRoom|withText 空间够的话优先显示图标，其次显示文字描述</li>
+</ul>
+</li>
+<li><p>在工具栏中使用 OptionsMenus </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">// 1. 创建 OptionsMenus</span></div><div class="line"><span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreateOptionsMenu</span><span class="params">(Menu menu, MenuInflater inflater)</span> </span>&#123;</div><div class="line">  	<span class="keyword">super</span>.onCreateOptionsMenu(menu, inflater);</div><div class="line">  	inflater.inflate(R.menu.fragment_crime_list,menu);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 2. 设置 OptionsMenu 生效</span></div><div class="line"><span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(@Nullable Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">  	<span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">  	setHasOptionsMenu(<span class="keyword">true</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 3. 设置点击事件</span></div><div class="line"><span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onOptionsItemSelected</span><span class="params">(MenuItem item)</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">switch</span> (item.getItemId()) &#123;</div><div class="line">        <span class="keyword">case</span> R.id.menu_item_new_crime:</div><div class="line">            Crime crime = <span class="keyword">new</span> Crime();</div><div class="line">            addCrime(crime);</div><div class="line">            Intent intent = CrimePagerActivity.newIntent(context,crime.id,indexOfCrime(crime));</div><div class="line">            startActivityForResult(intent,REQUEST_CODE_CRIME);</div><div class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        <span class="keyword">case</span> R.id.menu_item_show_subtitle:</div><div class="line">            updateSubtitle();</div><div class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        <span class="keyword">default</span>:</div><div class="line">          	<span class="keyword">return</span> <span class="keyword">super</span>.onOptionsItemSelected(item);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>层级式导航</p>
+<ul>
+<li><p>AndroidManifest 在相应的Activity 中添加 android:parentActivityName=”.CrimeListActivity” 出现下图效果</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1342220-e9adc7efce8fb90d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+</li>
+<li><p>点击左面箭头会执行</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Intent intent = <span class="keyword">new</span> Intent(<span class="keyword">this</span>, CrimeListActivity.class); </div><div class="line">intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); </div><div class="line">startActivity(intent); </div><div class="line">finish();</div></pre></td></tr></table></figure>
+</li>
+<li><p>Intent.FLAG_ACTIVITY_CLEAR_TOP ：在回退栈中寻找指定的 Activity，如果存在，弹出栈内其他 Activity，让启动的目标 Activity 出现在栈顶。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">If set, and the activity being launched is already running in the</div><div class="line">current task, then instead of launching a new instance of that activity,</div><div class="line">all of the other activities on top of it will be closed and this Intent</div><div class="line">will be delivered to the (now on top) old activity as a new Intent.</div><div class="line"></div><div class="line">For example, consider a task consisting of the activities: A, B, C, D.</div><div class="line">If D calls startActivity() with an Intent that resolves to the component</div><div class="line">of activity B, then C and D will be finished and B receive the given</div><div class="line">Intent, resulting in the stack now being: A, B.</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>获取 xml 中字符串，并设置占位符</p>
+<ul>
+<li><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">"hello"</span>&gt;</span>%1$s hello %2$s<span class="tag">&lt;/<span class="name">string</span>&gt;</span></div><div class="line">// %1$s 表示是 getString(resId,formatArgs) formatArgs 可变参数中的第一个参数</div></pre></td></tr></table></figure>
+</li>
+<li><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> String <span class="title">getString</span><span class="params">(@StringRes <span class="keyword">int</span> resId, Object... formatArgs)</span></span></div></pre></td></tr></table></figure>
+</li>
+<li><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">String str = getString(R.string.hello, <span class="string">"Android"</span>, <span class="string">"world"</span>);</div><div class="line"><span class="comment">// str 的结果为：Android hello world</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>使用复数字符串</p>
+<ul>
+<li><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">plurals</span> <span class="attr">name</span>=<span class="string">"subtitle_plural"</span>&gt;</span></div><div class="line">  	<span class="tag">&lt;<span class="name">item</span> <span class="attr">quantity</span>=<span class="string">"one"</span>&gt;</span>%1$s crime<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line">  	<span class="tag">&lt;<span class="name">item</span> <span class="attr">quantity</span>=<span class="string">"other"</span>&gt;</span>%1$s crimes<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">plurals</span>&gt;</span></div></pre></td></tr></table></figure>
+</li>
+<li><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">String subtitle = getResources()</div><div class="line">            .getQuantityString(R.plurals.subtitle_plural, crimeSize, crimeSize);</div><div class="line"><span class="comment">// crimeSize == 1 时 subtitle:1 crime</span></div><div class="line"><span class="comment">// crimeSize != 1 时 subtitle:n crimes</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>等等，你说没效果？把手机语言设置为英语，谷歌这样说的：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">but it's important to note that some languages (such as Chinese) don't make these grammatical distinctions at all, so you'll always get the other string.</div><div class="line"></div><div class="line">// 注意，一些语言（如中文）不会完全符合这些语法区别，所以你总会得到 other 的字符串。</div><div class="line">// 也是，总不能说："1个猴子" , "2个猴子们" 这种话吧。</div></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+<li><p>quantity 取值及描述   </p>
+</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>zero</td>
+<td>语言需要对数字0进行特殊处理。（比如阿拉伯语）</td>
+</tr>
+<tr>
+<td>one</td>
+<td>语言需要对类似1的数字进行特殊处理。（比如英语和其它大多数语言里的1；在俄语里，任何以1结尾但不以11结尾的数也属于此类型。）</td>
+</tr>
+<tr>
+<td>two</td>
+<td>语言需要对类似2的数字进行特殊处理。（比如威尔士语）</td>
+</tr>
+<tr>
+<td>few</td>
+<td>语言需要对较小数字进行特殊处理（比如捷克语里的2、3、4；或者波兰语里以2、3、4结尾但不是12、13、14的数。）</td>
+</tr>
+<tr>
+<td>many</td>
+<td>语言需要对较大数字进行特殊处理（比如马耳他语里以11-99结尾的数</td>
+</tr>
+<tr>
+<td>other</td>
+<td>语言不需要对数字进行特殊处理。</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p>为工具栏设置副标题</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">AppCompatActivity activity = (AppCompatActivity) context;</div><div class="line">ActionBar actionBar = activity.getSupportActionBar();</div><div class="line"><span class="keyword">if</span>(actionBar != <span class="keyword">null</span>) &#123;</div><div class="line">    <span class="comment">// 如果 subtitle == null，副标题将会隐藏</span></div><div class="line">	actionBar.setSubtitle(subtitle);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>初始化 OptionsMenus 中的 MenuItem </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreateOptionsMenu</span><span class="params">(Menu menu, MenuInflater inflater)</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>.onCreateOptionsMenu(menu, inflater);</div><div class="line">    inflater.inflate(R.menu.fragment_crime_list,menu);</div><div class="line"></div><div class="line">    MenuItem subtitleItem = menu.findItem(R.id.menu_item_show_subtitle);</div><div class="line">    <span class="keyword">if</span> (subtitleVisible) &#123;</div><div class="line">      	subtitleItem.setTitle(R.string.hide_subtitle);</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">      	subtitleItem.setTitle(R.string.show_subtitle);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>重新加载 OptionsMenus ：Activity#invalidateOptionsMenu</p>
+</li>
+<li><p>ViewStub 使用：懒加载，布局优化</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">// xml 布局</div><div class="line"><span class="tag">&lt;<span class="name">ViewStub</span></span></div><div class="line">        <span class="attr">android:layout_gravity</span>=<span class="string">"center"</span></div><div class="line">        <span class="attr">android:id</span>=<span class="string">"@+id/stub_empty"</span></div><div class="line">        <span class="attr">android:layout_width</span>=<span class="string">"60dp"</span></div><div class="line">        <span class="attr">android:layout_height</span>=<span class="string">"60dp"</span></div><div class="line">        <span class="attr">android:layout</span>=<span class="string">"@layout/recycler_empty"</span>/&gt;</div><div class="line"></div><div class="line">// recycler_empty.xml</div><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">ImageView</span></span></div><div class="line">    <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></div><div class="line">    <span class="attr">android:id</span>=<span class="string">"@+id/recycler_empty"</span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></div><div class="line">    <span class="attr">android:src</span>=<span class="string">"@drawable/ic_empty"</span>&gt;</div><div class="line"><span class="tag">&lt;/<span class="name">ImageView</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 1. 找到控件</span></div><div class="line"><span class="meta">@BindView</span>(R.id.stub_empty) ViewStub stubEmpty;</div><div class="line"></div><div class="line"><span class="comment">// 2. 填充完成后设置点击事件</span></div><div class="line">stubEmpty.setOnInflateListener(<span class="keyword">new</span> ViewStub.OnInflateListener() &#123;</div><div class="line">    <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onInflate</span><span class="params">(ViewStub stub, View inflated)</span> </span>&#123;</div><div class="line">      <span class="comment">// inflated 是 android:layout="@layout/recycler_empty" inflate 后的 View</span></div><div class="line">      inflated.setOnClickListener(CrimeListFragment.<span class="keyword">this</span>);</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</div><div class="line">    <span class="keyword">switch</span> (v.getId()) &#123;</div><div class="line">        <span class="keyword">case</span> R.id.recycler_empty:</div><div class="line">          	newCrime();</div><div class="line">          	<span class="keyword">break</span>;</div><div class="line">        <span class="keyword">default</span>:</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 3. 使用</span></div><div class="line"><span class="keyword">if</span>(CrimeLab.get().getCrimeList().isEmpty()) &#123;</div><div class="line">  	stubEmpty.setVisibility(View.VISIBLE);</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">  	stubEmpty.setVisibility(View.INVISIBLE);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>ViewStub 注意：</p>
+<ul>
+<li>setVisibility 方法判断是否 inflate 过，inflate 过直接显示 inflate 后的 View ，没有 inflate 过会调用 inflate 方法。</li>
+<li>inflate 方法调用后，ViewStub 会把自己从父 View 中 remove，然后将 inflate 出来的 View 放在自己的位置，这个方法不能调用两次，setVisibility 可以调用两次。</li>
+<li>综上，推荐使用 setVisibility 而不是 inflate。</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/AndroidGuide/" rel="tag"># AndroidGuide</a>
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/Note/" rel="tag"># Note</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/23/AndroidGuide_2/" rel="next" title="Android 编程权威指南阅读笔记(二) Fragment、RecyclerView 相关">
+                <i class="fa fa-chevron-left"></i> Android 编程权威指南阅读笔记(二) Fragment、RecyclerView 相关
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://obe5pxv6t.bkt.clouddn.com/ssyijiu.jpg"
+               alt="ssyijiu" />
+          <p class="site-author-name" itemprop="name">ssyijiu</p>
+           
+              <p class="site-description motion-element" itemprop="description">不负代码不负卿</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/ssyijiu" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/u/0dfb41dd9210" target="_blank" title="JianShu">
+                  
+                    <i class="fa fa-fw fa-book"></i>
+                  
+                  JianShu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#第11章：使用-ViewPager"><span class="nav-number">1.</span> <span class="nav-text">第11章：使用 ViewPager</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第12章：对话框"><span class="nav-number">2.</span> <span class="nav-text">第12章：对话框</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第13章：工具栏"><span class="nav-number">3.</span> <span class="nav-text">第13章：工具栏</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ssyijiu</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Android,AndroidGuide,Note," />
+  <meta name="keywords" content="AndroidGuide,Android,Note," />
 
 
 
@@ -96,7 +96,7 @@ Fragment 并不具备在屏幕上显示视图的能力，只有将它放在 Acti
 
 id 的类型使用 UUID
 
-Fragment 的生命周期有托管它的">
+Fragment 的生命周期由托管它的">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android 编程权威指南阅读笔记(二) Fragment、RecyclerView 相关">
 <meta property="og:url" content="http://ssyijiu.com/2017/04/23/AndroidGuide_2/index.html">
@@ -110,12 +110,12 @@ Fragment 并不具备在屏幕上显示视图的能力，只有将它放在 Acti
 
 id 的类型使用 UUID
 
-Fragment 的生命周期有托管它的">
+Fragment 的生命周期由托管它的">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1342220-7f1e6d6c072ae14f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1342220-95c58b411785164f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1342220-91ed1bd548eb3d48.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1342220-e11fff822aafa1ea.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-04-24T12:02:41.000Z">
+<meta property="og:updated_time" content="2017-04-26T15:32:16.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android 编程权威指南阅读笔记(二) Fragment、RecyclerView 相关">
 <meta name="twitter:description" content="版权声明：  本文来自书生依旧简书，转载请注明出处。
@@ -127,7 +127,7 @@ Fragment 并不具备在屏幕上显示视图的能力，只有将它放在 Acti
 
 id 的类型使用 UUID
 
-Fragment 的生命周期有托管它的">
+Fragment 的生命周期由托管它的">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1342220-7f1e6d6c072ae14f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
@@ -395,7 +395,7 @@ Fragment 的生命周期有托管它的">
 </li>
 <li><p>id 的类型使用 UUID</p>
 </li>
-<li><p>Fragment 的生命周期有托管它的 Activity 调用。</p>
+<li><p>Fragment 的生命周期由托管它的 Activity 调用。</p>
 </li>
 <li><p><img src="http://upload-images.jianshu.io/upload_images/1342220-7f1e6d6c072ae14f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 </li>
@@ -423,7 +423,7 @@ Fragment 的生命周期有托管它的">
 </li>
 <li><p>内存重启或者屏幕旋转时，FragmentManager 会先保存 fragment 队列，然后将 fragment 队列到原来的状态。</p>
 </li>
-<li><p>FragmentManager 负责调用 Activity 的生命周期，add() 时候，onAttach、onCreate、onCreateView 等生命周期才会调用。</p>
+<li><p>FragmentManager 负责调用 Activity 的生命周期，add() fragment 时候，onAttach、onCreate、onCreateView 等生命周期才会调用。</p>
 </li>
 <li><p>封装可复用组件是 Google 设计 fragment 的本意。</p>
 </li>
@@ -461,7 +461,7 @@ Fragment 的生命周期有托管它的">
 </li>
 </ul>
 <h2 id="第9章：使用-RecyclerView-显示列表"><a href="#第9章：使用-RecyclerView-显示列表" class="headerlink" title="第9章：使用 RecyclerView 显示列表"></a>第9章：使用 RecyclerView 显示列表</h2><ul>
-<li><p>应用在内存里存多久，单例久存多久。</p>
+<li><p>应用在内存里存多久，单例就存多久。</p>
 </li>
 <li><p>抽象 SingleFragmentActivity</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 其他一个 Activity 如果只放一个 fragment 的话继续这个类就好了</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">SingleFragmentActivity</span> <span class="keyword">extends</span> <span class="title">FragmentActivity</span> </span>&#123; </div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> Fragment <span class="title">createFragment</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span> </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123; </div><div class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState); </div><div class="line">        setContentView(R.layout.activity_fragment); </div><div class="line"> </div><div class="line">        FragmentManager fm = getSupportFragmentManager(); </div><div class="line">        Fragment fragment = fm.findFragmentById(R.id.fragment_container); </div><div class="line"> </div><div class="line">        <span class="keyword">if</span> (fragment == <span class="keyword">null</span>) &#123; </div><div class="line">            fragment = createFragment(); </div><div class="line">            fm.beginTransaction() </div><div class="line">                .add(R.id.fragment_container, fragment) </div><div class="line">                .commit(); </div><div class="line">        &#125; </div><div class="line">    &#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -482,7 +482,7 @@ Fragment 的生命周期有托管它的">
 <li><p>adapter.notifyItemMoved(0,5); 将 5 位置的 View 覆盖到 0，有动画效果，数据不变，notifyDataSetChanged 后恢复原样。</p>
 </li>
 <li><p>RecyclerView 最简单代码：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Adapter</span></div><div class="line"><span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">CrimeAdapter</span> <span class="keyword">extends</span> <span class="title">RecyclerView</span>.<span class="title">Adapter</span>&lt;<span class="title">CrimeViewHolder</span>&gt; </span>&#123;</div><div class="line">      List&lt;Crime&gt; crimeList;</div><div class="line">      CrimeAdapter(List&lt;Crime&gt; crimeList) &#123;</div><div class="line">          <span class="keyword">this</span>.crimeList = crimeList;</div><div class="line">      &#125;</div><div class="line"></div><div class="line">      <span class="meta">@Override</span></div><div class="line">      <span class="function"><span class="keyword">public</span> CrimeViewHolder <span class="title">onCreateViewHolder</span><span class="params">(ViewGroup parent, <span class="keyword">int</span> viewType)</span> </span>&#123;</div><div class="line">          LayoutInflater layoutInflater = LayoutInflater.from(getActivity());</div><div class="line">          View view = layoutInflater</div><div class="line">              .inflate(R.layout.item_crime, parent, <span class="keyword">false</span>);</div><div class="line"></div><div class="line">          <span class="keyword">return</span> <span class="keyword">new</span> CrimeViewHolder(view);</div><div class="line">      &#125;</div><div class="line"></div><div class="line">      <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onBindViewHolder</span><span class="params">(CrimeViewHolder holder, <span class="keyword">int</span> position)</span> </span>&#123;</div><div class="line">          holder.bindCrime(crimeList.get(position));</div><div class="line">      &#125;</div><div class="line"></div><div class="line">      <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getItemCount</span><span class="params">()</span> </span>&#123;</div><div class="line">          <span class="keyword">return</span> crimeList.size();</div><div class="line">      &#125;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line"><span class="comment">// ViewHolder</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">CrimeViewHolder</span> <span class="keyword">extends</span> <span class="title">RecyclerView</span>.<span class="title">ViewHolder</span> <span class="keyword">implements</span> <span class="title">View</span>.<span class="title">OnClickListener</span> </span>&#123;</div><div class="line">      <span class="meta">@BindView</span>(R.id.item_crime_tv_title) TextView tvTitle;</div><div class="line">      <span class="meta">@BindView</span>(R.id.item_crime_cb_solved) CheckBox cbSolved;</div><div class="line">      <span class="meta">@BindView</span>(R.id.item_crime_tv_date) TextView tvDate;</div><div class="line"></div><div class="line">      <span class="keyword">private</span> Crime crime;</div><div class="line"></div><div class="line">      CrimeViewHolder(View itemView) &#123;</div><div class="line">          <span class="keyword">super</span>(itemView);</div><div class="line">          ButterKnife.bind(<span class="keyword">this</span>, itemView);</div><div class="line">          itemView.setOnClickListener(<span class="keyword">this</span>);</div><div class="line">      &#125;</div><div class="line"></div><div class="line">      <span class="function"><span class="keyword">void</span> <span class="title">bindCrime</span><span class="params">(Crime crime)</span> </span>&#123;</div><div class="line">          <span class="keyword">this</span>.crime = crime;</div><div class="line">          tvTitle.setText(crime.title);</div><div class="line">          cbSolved.setChecked(crime.solved);</div><div class="line">          tvDate.setText(crime.date.toString());</div><div class="line">      &#125;</div><div class="line">      </div><div class="line">      <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</div><div class="line">          ToastUtil.show(crime.title + <span class="string">" clicked!"</span>);</div><div class="line">      &#125;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">// 使用</span></div><div class="line">  crimeRecycler.setLayoutManager(<span class="keyword">new</span> LinearLayoutManager(getActivity()));</div><div class="line">  adapter = <span class="keyword">new</span> CrimeAdapter(CrimeLab.get().getCrimeList());</div><div class="line">  crimeRecycler.setAdapter(adapter);</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Adapter</span></div><div class="line"><span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">CrimeAdapter</span> <span class="keyword">extends</span> <span class="title">RecyclerView</span>.<span class="title">Adapter</span>&lt;<span class="title">CrimeViewHolder</span>&gt; </span>&#123;</div><div class="line">       List&lt;Crime&gt; crimeList;</div><div class="line">       CrimeAdapter(List&lt;Crime&gt; crimeList) &#123;</div><div class="line">           <span class="keyword">this</span>.crimeList = crimeList;</div><div class="line">       &#125;</div><div class="line"></div><div class="line">       <span class="meta">@Override</span></div><div class="line">       <span class="function"><span class="keyword">public</span> CrimeViewHolder <span class="title">onCreateViewHolder</span><span class="params">(ViewGroup parent, <span class="keyword">int</span> viewType)</span> </span>&#123;</div><div class="line">           LayoutInflater layoutInflater = LayoutInflater.from(getActivity());</div><div class="line">           View view = layoutInflater</div><div class="line">               .inflate(R.layout.item_crime, parent, <span class="keyword">false</span>);</div><div class="line"></div><div class="line">           <span class="keyword">return</span> <span class="keyword">new</span> CrimeViewHolder(view);</div><div class="line">       &#125;</div><div class="line"></div><div class="line">       <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onBindViewHolder</span><span class="params">(CrimeViewHolder holder, <span class="keyword">int</span> position)</span> </span>&#123;</div><div class="line">           holder.bindCrime(crimeList.get(position));</div><div class="line">       &#125;</div><div class="line"></div><div class="line">       <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getItemCount</span><span class="params">()</span> </span>&#123;</div><div class="line">           <span class="keyword">return</span> crimeList.size();</div><div class="line">       &#125;</div><div class="line">   &#125;</div><div class="line">   </div><div class="line"><span class="comment">// ViewHolder</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">CrimeViewHolder</span> <span class="keyword">extends</span> <span class="title">RecyclerView</span>.<span class="title">ViewHolder</span> <span class="keyword">implements</span> <span class="title">View</span>.<span class="title">OnClickListener</span> </span>&#123;</div><div class="line">       <span class="meta">@BindView</span>(R.id.item_crime_tv_title) TextView tvTitle;</div><div class="line">       <span class="meta">@BindView</span>(R.id.item_crime_cb_solved) CheckBox cbSolved;</div><div class="line">       <span class="meta">@BindView</span>(R.id.item_crime_tv_date) TextView tvDate;</div><div class="line"> </div><div class="line">       <span class="keyword">private</span> Crime crime;</div><div class="line"> </div><div class="line">       CrimeViewHolder(View itemView) &#123;</div><div class="line">           <span class="keyword">super</span>(itemView);</div><div class="line">           ButterKnife.bind(<span class="keyword">this</span>, itemView);</div><div class="line">           itemView.setOnClickListener(<span class="keyword">this</span>);</div><div class="line">       &#125;</div><div class="line"> </div><div class="line">       <span class="function"><span class="keyword">void</span> <span class="title">bindCrime</span><span class="params">(Crime crime)</span> </span>&#123;</div><div class="line">           <span class="keyword">this</span>.crime = crime;</div><div class="line">           tvTitle.setText(crime.title);</div><div class="line">           cbSolved.setChecked(crime.solved);</div><div class="line">           tvDate.setText(crime.date.toString());</div><div class="line">       &#125;</div><div class="line">       </div><div class="line">       <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</div><div class="line">           ToastUtil.show(crime.title + <span class="string">" clicked!"</span>);</div><div class="line">       &#125;</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   <span class="comment">// 使用</span></div><div class="line">   crimeRecycler.setLayoutManager(<span class="keyword">new</span> LinearLayoutManager(getActivity()));</div><div class="line">   adapter = <span class="keyword">new</span> CrimeAdapter(CrimeLab.get().getCrimeList());</div><div class="line">   crimeRecycler.setAdapter(adapter);</div></pre></td></tr></table></figure>
 </li>
 </ul>
 <h2 id="第10章：使用-fragment-argument"><a href="#第10章：使用-fragment-argument" class="headerlink" title="第10章：使用 fragment argument"></a>第10章：使用 fragment argument</h2><ul>
@@ -500,7 +500,7 @@ Fragment 的生命周期有托管它的">
 </li>
 <li><p>这种方法使用稍微复杂，但是保证了 fragment 的通用性。</p>
 </li>
-<li><p>为什么不使用一些变量保存数据呢？内存重启是变量保存的数据被清空。</p>
+<li><p>为什么不使用一些变量保存数据呢？内存重启时变量保存的数据被清空。</p>
 </li>
 </ul>
 </li>
@@ -536,9 +536,9 @@ Fragment 的生命周期有托管它的">
       
         <div class="post-tags">
           
-            <a href="/tags/Android/" rel="tag"># Android</a>
-          
             <a href="/tags/AndroidGuide/" rel="tag"># AndroidGuide</a>
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
           
             <a href="/tags/Note/" rel="tag"># Note</a>
           
@@ -562,6 +562,10 @@ Fragment 的生命周期有托管它的">
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/26/AndroidGuide_3/" rel="prev" title="Android 编程权威指南阅读笔记(三) ViewPager、DialogFragment、OptionsMenus、ViewStub 相关">
+                Android 编程权威指南阅读笔记(三) ViewPager、DialogFragment、OptionsMenus、ViewStub 相关 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -633,7 +637,7 @@ Fragment 的生命周期有托管它的">
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
