@@ -106,7 +106,7 @@ ViewPager 和 fragment 一起使用
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1342220-101bc6d68b706abc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1342220-c0fdd483a8273ca4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1342220-e9adc7efce8fb90d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-04-26T15:39:03.000Z">
+<meta property="og:updated_time" content="2017-04-26T15:44:34.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android 编程权威指南阅读笔记(三) ViewPager、DialogFragment、OptionsMenus、ViewStub 相关">
 <meta name="twitter:description" content="版权声明：  本文来自书生依旧简书，转载请注明出处。
@@ -484,7 +484,7 @@ ViewPager 和 fragment 一起使用
 <li><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">String subtitle = getResources()</div><div class="line">            .getQuantityString(R.plurals.subtitle_plural, crimeSize, crimeSize);</div><div class="line"><span class="comment">// crimeSize == 1 时 subtitle:1 crime</span></div><div class="line"><span class="comment">// crimeSize != 1 时 subtitle:n crimes</span></div></pre></td></tr></table></figure>
 </li>
 <li><p>等等，你说没效果？把手机语言设置为英语，谷歌这样说的：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">but it's important to note that some languages (such as Chinese) don't make these grammatical distinctions at all, so you'll always get the other string.</div><div class="line"></div><div class="line">// 注意，一些语言（如中文）不会完全符合这些语法区别，所以你总会得到 other 的字符串。</div><div class="line">// 也是，总不能说："1个猴子" , "2个猴子们" 这种话吧。</div></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">but it's important to note that some languages (such as Chinese) </div><div class="line">don't make these grammatical distinctions at all, </div><div class="line">so you'll always get the other string.</div><div class="line"></div><div class="line">// 注意，一些语言（如中文）不会完全符合这些语法区别，所以你总会得到 other 的字符串。</div><div class="line">// 也是，总不能说："1个猴子" , "2个猴子们" 这种话吧。</div></pre></td></tr></table></figure>
 <p>​</p>
 </li>
 <li><p>quantity 取值及描述   </p>
